@@ -2,12 +2,12 @@ require 'cycad/version'
 
 module Cycad
   class << self
-    # def repo
-    #   @repo || TransactionsRepo::MemoryBucket.new
-    # end
+    def repo
+      @repo || TransactionsRepo::MemoryBucket.new
+    end
 
-    def add_transaction(_args)
-      'foo'
+    def add_transaction(args)
+      # persist to repo
     end
   end
 end
