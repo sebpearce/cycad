@@ -2,10 +2,10 @@ require 'Date'
 
 transactions = (1..10).map do |x|
   rand_id = x
-  rand_amt = rand(50) + 1
+  rand_amount = rand(50) + 1
   rand_date = Date.new(rand(2) + 2016, rand(12) + 1, rand(27) + 1)
-  puts "Creating Transaction(id: #{rand_id}, amt: #{rand_amt}, date: #{rand_date})"
-  Transaction.new(id: rand_id, amt: rand_amt, date: rand_date)
+  puts "Creating Transaction(id: #{rand_id}, amount: #{rand_amount}, date: #{rand_date})"
+  Transaction.new(id: rand_id, amount: rand_amount, date: rand_date)
 end
 
 transaction_category_names = %w[
