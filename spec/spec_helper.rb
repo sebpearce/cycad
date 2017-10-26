@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'cycad'
+require 'cycad/repo'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -11,4 +12,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
+  # Focus config so we can prefix f and so on
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
 end
