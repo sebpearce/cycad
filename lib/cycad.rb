@@ -10,12 +10,10 @@ require 'cycad/transaction'
 # - whether it's an income or expense
 # - what category it has
 
-# delete repo class, write tests, rewrite and make all tests pass
-
 module Cycad
   class << self
     def repo
-      @repo ||= TransactionsRepo::MemoryBucket.new
+      @repo ||= TransactionsRepo::MemoryRepo.new
     end
 
     def add_transaction(transaction)
