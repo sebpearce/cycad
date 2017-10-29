@@ -1,7 +1,7 @@
 class Transaction
   attr_accessor :id, :amount, :date, :note, :category_id
 
-  def initialize(amount:, date:, note:, category_id:)
+  def initialize(amount:, date:, note: nil, category_id:)
     @amount = amount
     @date = date
     @note = note

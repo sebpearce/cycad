@@ -2,14 +2,6 @@ require 'cycad/version'
 require 'cycad/repo'
 require 'cycad/transaction'
 
-# homework
-
-# implement filter_transactions
-# filter should be able to filter by:
-# - date range
-# - whether it's an income or expense
-# - what category it has
-
 module Cycad
   class << self
     def repo
@@ -22,6 +14,17 @@ module Cycad
 
     def find_transaction(id)
       repo.find(id)
+    end
+    
+    def purge_all_transactions
+      repo.purge_all
+    end
+
+    # don't like this duplicated code -
+    # how can we document the keywords in the main API here
+    # but still access them like regular keyword args in MemoryRepo.filter?
+    def filter_transactions(date_range: nil, type: nil, category_id: nil)
+      repo.filter(date_range: date_range, type: type, category_id: category_id)
     end
   end
 end
