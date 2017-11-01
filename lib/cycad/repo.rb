@@ -1,5 +1,4 @@
 require 'pry'
-require 'UUID'
 
 module TransactionsRepo
   class MemoryRepo
@@ -7,11 +6,9 @@ module TransactionsRepo
 
     def initialize
       @transactions = []
-      @uuid = UUID.new # shouldn't we do this when a transaction is init'ed?
     end
 
     def persist(transaction)
-      transaction.id = @uuid.generate # this has side effect on transactions…
       transactions << transaction
       transaction
     end
@@ -25,18 +22,16 @@ module TransactionsRepo
     end
 
     def purge_all
-      # doing this without the @ didn't work. Why?
       @transactions = []
     end
 
-    # feel like I should break this out into its own thing and modularise
     def filter(date_range: nil, type: nil, category_id: nil)
       result = transactions
 
       if date_range
         raise ArgumentError, 'Wrong date range format' if
           !date_range[:start_date] || !date_range[:end_date]
-          
+
         result = result.select do |transaction|
           transaction.date > date_range[:start_date] &&
           transaction.date < date_range[:end_date]

@@ -13,13 +13,14 @@ RSpec.describe TransactionsRepo::MemoryRepo do
   let(:transaction6) { Transaction.new(date: Date.new(2017, 4, 21), amount: -5, category_id: 1 ) }
 
   context '.persist' do
-    before { @returned = repo.persist(transaction1) }
+    let!(:persisted_transaction) { repo.persist(transaction1) }
 
     it 'returns the transaction that it persisted' do
-      expect(@returned).to eq(transaction1)
+      expect(persisted_transaction).to eq(transaction1)
     end
 
     it 'adds a unique id to each transaction' do
+      fail('this test needs to be moved to transaction spec')
       repo.persist(transaction2)
       expect(transaction1.id).to_not eq(transaction2.id)
     end
@@ -81,7 +82,7 @@ RSpec.describe TransactionsRepo::MemoryRepo do
             }
           }
         end
-        
+
         it 'raises an ArgumentError' do
           expect { subject }.to raise_error(ArgumentError)
         end
@@ -163,7 +164,7 @@ RSpec.describe TransactionsRepo::MemoryRepo do
 
     context 'when a category is provided' do
       subject { repo.filter(filter_args) }
-      
+
       context 'when the category is not a number' do
         let(:filter_args) { {category_id: 'muffin'} }
 
