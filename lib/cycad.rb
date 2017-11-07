@@ -1,7 +1,9 @@
 require 'cycad/version'
 require 'cycad/repo'
 require 'cycad/transaction'
-require 'cycad/transactions_filter'
+require 'cycad/date_filter'
+require 'cycad/transaction_type_filter'
+require 'cycad/category_filter'
 
 # Homework 2017-11-01
 
