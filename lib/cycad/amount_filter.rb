@@ -1,6 +1,6 @@
 module Cycad
   module Filters
-    class TransactionTypeFilter
+    class AmountFilter
       def self.filter_income_only(transactions)
         transactions.select do |transaction|
           transaction.amount > 0

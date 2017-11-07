@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'date'
 
-RSpec.describe Cycad::Filters::TransactionTypeFilter do
+RSpec.describe Cycad::Filters::AmountFilter do
   let(:transaction1) { double(Transaction, amount: 123) }
   let(:transaction2) { double(Transaction, amount: 13) }
   let(:transaction3) { double(Transaction, amount: -5) }
@@ -17,14 +17,14 @@ RSpec.describe Cycad::Filters::TransactionTypeFilter do
 
   context 'self.filter_income_only' do
     it 'returns only income transactions' do
-      filtered = Cycad::Filters::TransactionTypeFilter.filter_income_only(transactions)
+      filtered = Cycad::Filters::AmountFilter.filter_income_only(transactions)
       expect(filtered).to contain_exactly(transaction1, transaction2)
     end
   end
 
   context 'self.filter_expenses_only' do
     it 'returns only expense transactions' do
-      filtered = Cycad::Filters::TransactionTypeFilter.filter_expenses_only(transactions)
+      filtered = Cycad::Filters::AmountFilter.filter_expenses_only(transactions)
       expect(filtered).to contain_exactly(transaction3, transaction4)
     end
   end
