@@ -28,4 +28,18 @@ RSpec.describe Cycad::Filters::AmountFilter do
       expect(filtered).to contain_exactly(transaction3, transaction4)
     end
   end
+  
+  context 'self.filter_amount_range' do
+    let(:lower_limit) { -5 }
+    let(:upper_limit) { 123 }
+
+    it 'returns transactions within a range of amounts' do
+      filtered = Cycad::Filters::AmountFilter.filter_amount_range(
+        transactions,
+        lower_limit,
+        upper_limit
+      )
+      expect(filtered).to contain_exactly(transaction1, transaction2, transaction3)
+    end
+  end
 end
