@@ -19,12 +19,6 @@ RSpec.describe TransactionsRepo::MemoryRepo do
       expect(persisted_transaction).to eq(transaction1)
     end
 
-    it 'adds a unique id to each transaction' do
-      fail('this test needs to be moved to transaction spec')
-      repo.persist(transaction2)
-      expect(transaction1.id).to_not eq(transaction2.id)
-    end
-
     it 'adds the transaction to the list of transactions' do
       expect(repo.transactions).to include(transaction1)
     end
