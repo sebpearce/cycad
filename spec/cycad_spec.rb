@@ -1,6 +1,6 @@
 require 'spec_helper'
 require 'pry'
-require 'Date'
+require 'date'
 
 RSpec.describe Cycad do
   context '.add_transaction' do
@@ -83,7 +83,7 @@ RSpec.describe Cycad do
         expect(Cycad.filter_transactions).to eq(all_transactions)
       end
     end
-
+    
     context 'when a date range and category is provided' do
       subject do
         Cycad.filter_transactions(
