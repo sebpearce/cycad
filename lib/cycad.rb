@@ -8,7 +8,6 @@ require 'cycad/category_filter'
 # Homework 2017-11-01
 
 # - What does the API look like for chaining multiple filters? Can you make it cleaner? ActiveRecord has things like: `transactions.filter_by_date_range(range).filter_income_only`. Can you make your API that neat too?
-# - Can you make the amount filter accept things like `> 100` or `< -100` or even a range
 # - Adding tagging to transactions (e.g. Christmas 2017)
 # - Look into adding, removing and updating existing transactions
 
