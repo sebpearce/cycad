@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'date'
 
 RSpec.describe Cycad::Filters::AmountFilter do
-  let(:transaction1) { double(Transaction, amount: 123) }
-  let(:transaction2) { double(Transaction, amount: 13) }
-  let(:transaction3) { double(Transaction, amount: -5) }
-  let(:transaction4) { double(Transaction, amount: -77) }
+  let(:transaction1) { double(Cycad::Transaction, amount: 123) }
+  let(:transaction2) { double(Cycad::Transaction, amount: 13) }
+  let(:transaction3) { double(Cycad::Transaction, amount: -5) }
+  let(:transaction4) { double(Cycad::Transaction, amount: -77) }
   let (:transactions) do
     [
       transaction1,

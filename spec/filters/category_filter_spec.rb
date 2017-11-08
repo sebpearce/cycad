@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'date'
 
 RSpec.describe Cycad::Filters::CategoryFilter do
-  let(:transaction1) { double(Transaction, category_id: 6) }
-  let(:transaction2) { double(Transaction, category_id: 6) }
-  let(:transaction3) { double(Transaction, category_id: 9) }
-  let(:transaction4) { double(Transaction, category_id: 7) }
+  let(:transaction1) { double(Cycad::Transaction, category_id: 6) }
+  let(:transaction2) { double(Cycad::Transaction, category_id: 6) }
+  let(:transaction3) { double(Cycad::Transaction, category_id: 9) }
+  let(:transaction4) { double(Cycad::Transaction, category_id: 7) }
   let (:transactions) do
     [
       transaction1,

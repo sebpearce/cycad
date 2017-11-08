@@ -3,14 +3,14 @@ require 'cycad/repo'
 require 'cycad/transaction'
 require 'Date'
 
-RSpec.describe TransactionsRepo::MemoryRepo do
-  let(:repo) { TransactionsRepo::MemoryRepo.new }
-  let(:transaction1) { Transaction.new(date: Date.new(2017, 5, 1), amount: -19.95, category_id: 2 ) }
-  let(:transaction2) { Transaction.new(date: Date.new(2017, 10, 29), amount: -17, category_id: 3 ) }
-  let(:transaction3) { Transaction.new(date: Date.new(2017, 6, 1), amount: -14, category_id: 2 ) }
-  let(:transaction4) { Transaction.new(date: Date.new(2017, 5, 27), amount: -4, category_id: 2 ) }
-  let(:transaction5) { Transaction.new(date: Date.new(2017, 5, 14), amount: 4300, note: 'I am the only income transaction here', category_id: 4) }
-  let(:transaction6) { Transaction.new(date: Date.new(2017, 4, 21), amount: -5, category_id: 1 ) }
+RSpec.describe Cycad::TransactionsRepo::MemoryRepo do
+  let(:repo) { Cycad::TransactionsRepo::MemoryRepo.new }
+  let(:transaction1) { Cycad::Transaction.new(date: Date.new(2017, 5, 1), amount: -19.95, category_id: 2 ) }
+  let(:transaction2) { Cycad::Transaction.new(date: Date.new(2017, 10, 29), amount: -17, category_id: 3 ) }
+  let(:transaction3) { Cycad::Transaction.new(date: Date.new(2017, 6, 1), amount: -14, category_id: 2 ) }
+  let(:transaction4) { Cycad::Transaction.new(date: Date.new(2017, 5, 27), amount: -4, category_id: 2 ) }
+  let(:transaction5) { Cycad::Transaction.new(date: Date.new(2017, 5, 14), amount: 4300, note: 'I am the only income transaction here', category_id: 4) }
+  let(:transaction6) { Cycad::Transaction.new(date: Date.new(2017, 4, 21), amount: -5, category_id: 1 ) }
 
   context '.persist' do
     let!(:persisted_transaction) { repo.persist(transaction1) }

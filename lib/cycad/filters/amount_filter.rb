@@ -31,6 +31,10 @@ module Cycad
           transaction.amount <= upper_limit
         end
       end
+
+      def self.filter_by(transactions, block)
+        transactions.select(&block)
+      end
     end
   end
 end

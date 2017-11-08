@@ -1,10 +1,10 @@
 require 'spec_helper'
 require 'date'
 
-RSpec.describe Transaction do
+RSpec.describe Cycad::Transaction do
   context '.initialize' do
     it 'adds a unique id to a new transaction' do
-      new_transaction = Transaction.new(
+      new_transaction = Cycad::Transaction.new(
         amount: 45,
         date: Date.new(2017, 11, 7),
         category_id: 4

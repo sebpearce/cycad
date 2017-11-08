@@ -2,21 +2,17 @@ require 'cycad/version'
 require 'cycad/repo'
 require 'cycad/transaction'
 require 'cycad/transactions'
-require 'cycad/date_filter'
-require 'cycad/amount_filter'
-require 'cycad/category_filter'
+require 'cycad/filters/date_filter'
+require 'cycad/filters/amount_filter'
+require 'cycad/filters/category_filter'
 
 # Homework 2017-11-01
 
-# - Adding tagging to transactions (e.g. Christmas 2017)
-# - Look into adding, removing and updating existing transactions
-
-# Observations & notes
-# - Ahh! Now the filters are no longer coupled to the repo! :)
-# = Should all this logic now live in the outer class (the main API below)?
-#     Where should the argument validation happen?
-# - I can only get the chainable methods to return a Transactions instance.
-#   How can I make it return an array but still be chainable?
+# - Defining `Transactions#inspect`
+# - Can you make the amount filter accept arbitrary things like `{ |a| a > 100 }` or `{ |a| a < -100 }`?  Not `{ |t| t.amount < 100 }`
+# - Tidy up `amount_filter.rb` by leaning on the `filter_by` method.
+# - Adding tagging to transactions (i.e. Christmas 2017)
+# - Look into adding transactions, removing transactions and updating existing transactions
 
 module Cycad
   class << self

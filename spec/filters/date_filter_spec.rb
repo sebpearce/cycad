@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'date'
 
 RSpec.describe Cycad::Filters::DateFilter do
-  let(:transaction1) { double(Transaction, date: Date.new(2017,10,5)) }
-  let(:transaction2) { double(Transaction, date: Date.new(2017,10,9)) }
-  let(:transaction3) { double(Transaction, date: Date.new(2017,10,15)) }
-  let(:transaction4) { double(Transaction, date: Date.new(2017,10,25)) }
+  let(:transaction1) { double(Cycad::Transaction, date: Date.new(2017,10,5)) }
+  let(:transaction2) { double(Cycad::Transaction, date: Date.new(2017,10,9)) }
+  let(:transaction3) { double(Cycad::Transaction, date: Date.new(2017,10,15)) }
+  let(:transaction4) { double(Cycad::Transaction, date: Date.new(2017,10,25)) }
   let (:transactions) do
     [
       transaction1,

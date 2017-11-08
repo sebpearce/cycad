@@ -1,42 +1,55 @@
-class Transactions
-  attr_reader :all
+module Cycad
+  class Transactions < Array
+    def initialize(transactions)
+      self.replace(transactions)
+    end
 
-  def initialize(transactions)
-    @all = transactions
-  end
+    def date_range(start_date, end_date)
+      filter(
+        Cycad::Filters::DateFilter.filter_by_date_range(self, start_date, end_date)
+      )
+    end
 
-  def date_range(start_date, end_date)
-    @all = Cycad::Filters::DateFilter.filter_by_date_range(all, start_date, end_date)
-    self
-  end
+    def income_only
+      filter(
+        Cycad::Filters::AmountFilter.filter_income_only(self)
+      )
+    end
 
-  def income_only
-    @all = Cycad::Filters::AmountFilter.filter_income_only(all)
-    self
-  end
+    def expenses_only
+      filter(
+        Cycad::Filters::AmountFilter.filter_expenses_only(self)
+      )
+    end
 
-  def expenses_only
-    @all = Cycad::Filters::AmountFilter.filter_expenses_only(all)
-    self
-  end
+    def amount_range(lower_limit, upper_limit)
+      filter(
+        Cycad::Filters::AmountFilter.filter_amount_range(self, lower_limit, upper_limit)
+      )
+    end
 
-  def amount_range(lower_limit, upper_limit)
-    @all = Cycad::Filters::AmountFilter.filter_amount_range(all, lower_limit, upper_limit)
-    self
-  end
+    def greater_than(lower_limit)
+      filter(
+        Cycad::Filters::AmountFilter.filter_greater_than(self, lower_limit)
+      )
+    end
 
-  def greater_than(lower_limit)
-    @all = Cycad::Filters::AmountFilter.filter_greater_than(all, lower_limit)
-    self
-  end
+    def less_than(upper_limit)
+      filter(
+        Cycad::Filters::AmountFilter.filter_less_than(self, upper_limit)
+      )
+    end
 
-  def less_than(upper_limit)
-    @all = Cycad::Filters::AmountFilter.filter_less_than(all, upper_limit)
-    self
-  end
+    def category(id)
+      filter(
+        Cycad::Filters::CategoryFilter.filter_by_category(self, id)
+      )
+    end
 
-  def category(id)
-    @all = Cycad::Filters::CategoryFilter.filter_by_category(all, id)
-    self
+    private
+
+    def filter(list)
+      self.class.new(list)
+    end
   end
 end
