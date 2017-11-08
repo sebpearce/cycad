@@ -46,6 +46,18 @@ module Cycad
       )
     end
 
+    def inspect
+      formatted = [
+        "[\n",
+        self.map do |t|
+          "  ".concat(t.to_s)
+        end.join(",\n"),
+        "\n]",
+        "\n"
+      ].join("")
+      puts formatted
+    end
+
     private
 
     def filter(list)
