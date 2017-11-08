@@ -17,7 +17,7 @@ RSpec.describe Cycad::Filters::DateFilter do
 
   context 'self.filter_by_date_range' do
     it 'finds transactions in a date range' do
-      filtered = Cycad::Filters::DateFilter.filter_by_date_range(
+      filtered = Cycad::Filters::DateFilter::DateRange.filter(
         transactions,
         Date.new(2017,10,5),
         Date.new(2017,10,15)

@@ -1,7 +1,7 @@
 module Cycad
   module Filters
     class CategoryFilter
-      def self.filter_by_category(transactions, id)
+      def self.filter(transactions, id)
         transactions.select do |transaction|
           transaction.category_id == id
         end

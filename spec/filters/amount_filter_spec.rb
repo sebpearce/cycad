@@ -17,14 +17,14 @@ RSpec.describe Cycad::Filters::AmountFilter do
 
   context 'self.filter_income_only' do
     it 'returns only income transactions' do
-      filtered = Cycad::Filters::AmountFilter.filter_income_only(transactions)
+      filtered = Cycad::Filters::AmountFilter::IncomeOnly.filter(transactions)
       expect(filtered).to contain_exactly(transaction1, transaction2)
     end
   end
 
   context 'self.filter_expenses_only' do
     it 'returns only expense transactions' do
-      filtered = Cycad::Filters::AmountFilter.filter_expenses_only(transactions)
+      filtered = Cycad::Filters::AmountFilter::ExpensesOnly.filter(transactions)
       expect(filtered).to contain_exactly(transaction3, transaction4)
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe Cycad::Filters::AmountFilter do
     let(:upper_limit) { 123 }
 
     it 'returns transactions within a range of amounts' do
-      filtered = Cycad::Filters::AmountFilter.filter_amount_range(
+      filtered = Cycad::Filters::AmountFilter::AmountRange.filter(
         transactions,
         lower_limit,
         upper_limit
@@ -45,7 +45,7 @@ RSpec.describe Cycad::Filters::AmountFilter do
 
   context 'self.filter_greater_than' do
     it 'returns transactions with amounts greater than or equal to X' do
-      filtered = Cycad::Filters::AmountFilter.filter_greater_than(
+      filtered = Cycad::Filters::AmountFilter::GreaterThan.filter(
         transactions,
         13
       )
@@ -55,7 +55,7 @@ RSpec.describe Cycad::Filters::AmountFilter do
 
   context 'self.filter_less_than' do
     it 'returns transactions with amounts less than or equal to X' do
-      filtered = Cycad::Filters::AmountFilter.filter_less_than(
+      filtered = Cycad::Filters::AmountFilter::LessThan.filter(
         transactions,
         13
       )

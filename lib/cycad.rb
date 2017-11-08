@@ -36,7 +36,7 @@ module Cycad
       result = repo.transactions
 
       if date_range && date_range.has_key?(:start_date) && date_range.has_key?(:end_date)
-        result = Filters::DateFilter.filter_by_date_range(
+        result = Filters::DateFilter::DateRange.filter(
             result,
             date_range[:start_date],
             date_range[:end_date]
@@ -44,13 +44,13 @@ module Cycad
       end
 
       if type == :income_only
-        result = Filters::AmountFilter.filter_income_only(result)
+        result = Filters::AmountFilter::IncomeOnly.filter(result)
       elsif type == :expenses_only
-        result = Filters::AmountFilter.filter_expenses_only(result)
+        result = Filters::AmountFilter::ExpensesOnly.filter(result)
       end
 
       if category_id
-        result = Filters::CategoryFilter.filter_by_category(result, category_id)
+        result = Filters::CategoryFilter.filter(result, category_id)
       end
 
       result

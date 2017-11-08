@@ -17,7 +17,7 @@ RSpec.describe Cycad::Filters::CategoryFilter do
 
   context 'self.filter_by_category' do
     it 'returns only transactions of that category' do
-      filtered = Cycad::Filters::CategoryFilter.filter_by_category(transactions, 6)
+      filtered = Cycad::Filters::CategoryFilter.filter(transactions, 6)
       expect(filtered).to contain_exactly(transaction1, transaction2)
     end
   end
