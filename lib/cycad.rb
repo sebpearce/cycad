@@ -1,6 +1,7 @@
 require 'cycad/version'
 require 'cycad/repo'
 require 'cycad/transaction'
+require 'cycad/transaction_category'
 require 'cycad/transactions'
 require 'cycad/filters/date_filter'
 require 'cycad/filters/amount_filter'

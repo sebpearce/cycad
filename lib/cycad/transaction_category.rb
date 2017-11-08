@@ -1,10 +1,11 @@
+require 'securerandom'
+
 module Cycad
   class TransactionCategory
-    attr_reader :id
-    attr_accessor :name
+    attr_reader :id, :name
 
     def initialize(name:)
-      @id = id
+      @id = SecureRandom.uuid
       @name = name
     end
   end
