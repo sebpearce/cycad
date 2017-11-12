@@ -9,9 +9,12 @@ require 'cycad/filters/category_filter'
 
 # Homework 2017-11-01
 
-# - Tidy up `amount_filter.rb` by leaning on the `filter_by` method.
 # - Adding tagging to transactions (i.e. Christmas 2017)
 # - Look into adding transactions, removing transactions and updating existing transactions
+
+# Notes & observations
+
+# - Is the way I've organised the AmountFilter class a good idea?
 
 module Cycad
   class << self
