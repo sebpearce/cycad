@@ -18,6 +18,19 @@ RSpec.describe Cycad do
     end
   end
 
+  context '.tag_transaction' do
+    it 'adds an existing tag to a transaction' do
+      transaction = Cycad::Transaction.new(
+        date: Date.new(2017, 8, 4),
+        amount: 77,
+        category_id: 2
+      )
+      tag = Cycad::Tag.new(name: 'Xmas 2017')
+      Cycad.tag_transaction(transaction, tag)
+      expect(transaction.tags).to contain_exactly(tag)
+    end
+  end
+
   context '.purge_all_transactions' do
     context 'when there are transactions in the repo' do
       before do
