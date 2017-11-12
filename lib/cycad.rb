@@ -9,8 +9,6 @@ require 'cycad/filters/category_filter'
 
 # Homework 2017-11-01
 
-# - Defining `Transactions#inspect`
-# - Can you make the amount filter accept arbitrary things like `{ |a| a > 100 }` or `{ |a| a < -100 }`?  Not `{ |t| t.amount < 100 }`
 # - Tidy up `amount_filter.rb` by leaning on the `filter_by` method.
 # - Adding tagging to transactions (i.e. Christmas 2017)
 # - Look into adding transactions, removing transactions and updating existing transactions

@@ -1,8 +1,10 @@
 module Cycad
   module Filters
     class AmountFilter
-      def self.filter(transactions, block)
-        transactions.select(&block)
+      def self.filter(transactions)
+        transactions.select do |transaction|
+          yield transaction.amount
+        end
       end
 
       class IncomeOnly
