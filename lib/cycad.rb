@@ -4,29 +4,33 @@ require 'cycad/transaction'
 require 'cycad/transaction_category'
 require 'cycad/transactions'
 require 'cycad/tag'
+require 'cycad/tagger'
 require 'cycad/filters/date_filter'
 require 'cycad/filters/amount_filter'
 require 'cycad/filters/category_filter'
 
 # Homework 2017-11-01
 
-# - Adding tagging to transactions (i.e. Christmas 2017)
 # - Look into adding transactions, removing transactions and updating existing transactions
 
 # Notes & observations
 
 # - Is the way I've organised the AmountFilter class a good idea?
 # - I didn't want to make a "Tagger" that either creates a new tag or looks
-#   for an existing one with the same string, because the front end should do 
+#   for an existing one with the same string, because the front end should do
 #   that – user should see autocomplete list while typing so they don't get a
 #   tag name slightly wrong and create 2 tags.
+# - replace(old_array - [el]) or delete(el)?
+# - I noticed that my tests sometimes mutate the shared fixtures at the top of
+#   the test, which means that the order of the tests matters.
+#   Is this OK, or should I make sure we're starting fresh each time?
 
 module Cycad
   class << self
     def repo
       @repo ||= TransactionsRepo::MemoryRepo.new
     end
-    
+
     def add_transaction(transaction)
       repo.persist(transaction)
     end
@@ -40,11 +44,7 @@ module Cycad
     end
 
     def tag_transaction(transaction, tag)
-      # need to make this immutable and break out the logic
-      # have a separate class that tags transactions
-      # and it can create a new transaction with the tag and delete the old one
-      # then swap it in
-      transaction.tags << tag
+      Tagger.attach_tag(transaction, tag)
     end
 
     def filter_transactions(date_range: nil, type: nil, category_id: nil)

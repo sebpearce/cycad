@@ -25,9 +25,9 @@ RSpec.describe Cycad do
         amount: 77,
         category_id: 2
       )
-      tag = Cycad::Tag.new(name: 'Xmas 2017')
+      tag = Cycad::Tag.new('Xmas 2017')
       Cycad.tag_transaction(transaction, tag)
-      expect(transaction.tags).to contain_exactly(tag)
+      expect(transaction.tags).to contain_exactly(tag.id)
     end
   end
 
