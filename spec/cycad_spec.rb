@@ -11,10 +11,26 @@ RSpec.describe Cycad do
         category_id: 2
       )
       Cycad.add_transaction(transaction)
-      expect(Cycad.repo.count).to eq(1)
+      expect(Cycad.repo.transactions).to include(transaction)
       expect(transaction.id).to_not be_nil
-      # Would it make sense to purge all transactions here at the end
-      # of each test, rather than in the before block? Seems more defensive.
+      Cycad.purge_all_transactions
+    end
+  end
+
+  context '.remove_transaction' do
+    let(:transaction) do
+      Cycad::Transaction.new(
+        date: Date.new(2017, 11, 14),
+        amount: 5,
+        category_id: 1
+      )
+    end
+
+    before { Cycad.add_transaction(transaction) }
+
+    it 'removes an existing transaction' do
+      Cycad.remove_transaction(transaction.id)
+      expect(Cycad.repo.transactions).to_not include(transaction)
     end
   end
 

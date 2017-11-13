@@ -40,6 +40,15 @@ RSpec.describe Cycad::TransactionsRepo::MemoryRepo do
     end
   end
 
+  context '.purge' do
+    before { repo.persist(transaction2) }
+
+    it 'purges a transaction' do
+      repo.purge(transaction2.id)
+      expect(repo.transactions).to_not include(transaction2)
+    end
+  end
+
   context '.purge_all' do
     context 'when there are existing transactions' do
       before do

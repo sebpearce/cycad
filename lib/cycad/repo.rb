@@ -20,6 +20,12 @@ module Cycad
         transactions.count
       end
 
+      def purge(id)
+        transactions.replace(
+          transactions.select { |transaction| transaction.id != id }
+        )
+      end
+
       def purge_all
         @transactions = []
       end

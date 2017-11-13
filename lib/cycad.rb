@@ -24,6 +24,18 @@ require 'cycad/filters/category_filter'
 # - I noticed that my tests sometimes mutate the shared fixtures at the top of
 #   the test, which means that the order of the tests matters.
 #   Is this OK, or should I make sure we're starting fresh each time?
+#   e.g. purge_all_transactions at the end of every test in cycad spec
+# - Is it normal to do an expect before exercising the test, so that we can
+#   make sure the before state is what we think it is?
+# - Which do you prefer?
+#   to_remove = find(id)
+#   transactions.replace(transactions - [to_remove])
+#   OR
+#   transactions.replace(
+#     transactions.select { |transaction| transaction.id != id }
+#   )
+
+
 
 module Cycad
   class << self
@@ -33,6 +45,10 @@ module Cycad
 
     def add_transaction(transaction)
       repo.persist(transaction)
+    end
+
+    def remove_transaction(id)
+      repo.purge(id)
     end
 
     def find_transaction(id)
