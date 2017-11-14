@@ -31,6 +31,13 @@ RSpec.describe Cycad::TransactionsRepo::MemoryRepo do
       expect(repo.find(transaction1.id)).to eq(transaction1)
     end
   end
+  
+  context '.update' do
+    it 'updates an existing transaction' do
+      repo.update(transaction1.id, amount: -5)
+      expect(transaction1.amount).to eq(-5)
+    end
+  end
 
   context '.count'  do
     before { repo.persist(transaction1) }
