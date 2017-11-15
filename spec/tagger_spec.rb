@@ -37,11 +37,11 @@ RSpec.describe Cycad::Tagger do
     end
   end
 
-  context 'self.update_tag_name' do
+  context 'self.rename_tag' do
     let(:new_name) { 'boris' }
 
     it 'edits an existing tag' do
-      Cycad::Tagger.update_tag_name(existing_tag, new_name)
+      Cycad::Tagger.rename_tag(existing_tag, new_name)
       expect(existing_tag.name).to eq(new_name)
     end
   end

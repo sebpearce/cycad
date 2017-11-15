@@ -15,24 +15,17 @@ module Cycad
       def find(id)
         transactions.find { |transaction| transaction.id == id }
       end
-      
-      def update(id, args = {})
-        # Transaction has attr_readers only,
-        # need to make a new transaction here
-        transaction = find(id)
-        args.each do |key, value|
-          transaction.instance_variable_set("@#{key}", value)
-        end
+
+      def update(transaction, args = {})
+        transaction.update(args)
       end
 
       def count
         transactions.count
       end
 
-      def purge(id)
-        transactions.replace(
-          transactions.select { |transaction| transaction.id != id }
-        )
+      def purge(transaction)
+        transactions.delete(transaction)
       end
 
       def purge_all

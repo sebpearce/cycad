@@ -9,32 +9,32 @@ module Cycad
 
       class IncomeOnly
         def self.filter(transactions)
-          Cycad::Filters::AmountFilter.filter(transactions) { |a| a > 0 }
+          AmountFilter.filter(transactions) { |a| a > 0 }
         end
       end
 
       class ExpensesOnly
         def self.filter(transactions)
-          Cycad::Filters::AmountFilter.filter(transactions) { |a| a < 0 }
+          AmountFilter.filter(transactions) { |a| a < 0 }
         end
       end
 
       class AmountRange
         def self.filter(transactions, lower_limit, upper_limit)
           range = lower_limit..upper_limit
-          Cycad::Filters::AmountFilter.filter(transactions) { |a| range.cover?(a) }
+          AmountFilter.filter(transactions) { |a| range.cover?(a) }
         end
       end
 
       class GreaterThan
         def self.filter(transactions, lower_limit)
-          Cycad::Filters::AmountFilter.filter(transactions) { |a| a >= lower_limit }
+          AmountFilter.filter(transactions) { |a| a >= lower_limit }
         end
       end
 
       class LessThan
         def self.filter(transactions, upper_limit)
-          Cycad::Filters::AmountFilter.filter(transactions) { |a| a <= upper_limit }
+          AmountFilter.filter(transactions) { |a| a <= upper_limit }
         end
       end
     end

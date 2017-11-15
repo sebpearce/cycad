@@ -10,12 +10,10 @@ module Cycad
     end
 
     def self.remove_tag(transaction, tag)
-      transaction.tags.replace(transaction.tags - [tag.id])
-      # what about this?
-      # transaction.tags.delete(tag.id)
+      transaction.tags.delete(tag.id)
     end
 
-    def self.update_tag_name(tag, new_name)
+    def self.rename_tag(tag, new_name)
       tag.name = new_name
     end
   end

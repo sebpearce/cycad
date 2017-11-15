@@ -9,32 +9,16 @@ require 'cycad/filters/date_filter'
 require 'cycad/filters/amount_filter'
 require 'cycad/filters/category_filter'
 
-# Homework 2017-11-01
+# Homework 2017-11-15
 
-# - Look into adding transactions, removing transactions and updating existing transactions
-
-# Notes & observations
-
-# - Is the way I've organised the AmountFilter class a good idea?
-# - I didn't want to make a "Tagger" that either creates a new tag or looks
-#   for an existing one with the same string, because the front end should do
-#   that – user should see autocomplete list while typing so they don't get a
-#   tag name slightly wrong and create 2 tags.
-# - replace(old_array - [el]) or delete(el)?
-# - I noticed that my tests sometimes mutate the shared fixtures at the top of
-#   the test, which means that the order of the tests matters.
-#   Is this OK, or should I make sure we're starting fresh each time?
-#   e.g. purge_all_transactions at the end of every test in cycad spec
-# - Is it normal to do an expect before exercising the test, so that we can
-#   make sure the before state is what we think it is?
-# - Which do you prefer?
-#   to_remove = find(id)
-#   transactions.replace(transactions - [to_remove])
-#   OR
-#   transactions.replace(
-#     transactions.select { |transaction| transaction.id != id }
-#   )
-
+# - Validations!
+#     - dry-validations, enforcing schemas
+#     - Validating the types of fields
+#     - Validate transaction amount is not a zero dollar amount
+#     - Notes for a transaction can't be longer than 255 characters
+#     - Category has to have a name, and has to be shorter than a specific amount
+#         - Tag has to have a name, and has to be shorter than a specific amount
+# - Stretch goal: Hooking it up to rom-rb: [ROM](http://rom-rb.org/) and a real database
 
 
 module Cycad
@@ -47,8 +31,8 @@ module Cycad
       repo.persist(transaction)
     end
 
-    def remove_transaction(id)
-      repo.purge(id)
+    def remove_transaction(transaction)
+      repo.purge(transaction)
     end
 
     def find_transaction(id)

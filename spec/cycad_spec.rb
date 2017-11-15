@@ -13,7 +13,6 @@ RSpec.describe Cycad do
       Cycad.add_transaction(transaction)
       expect(Cycad.repo.transactions).to include(transaction)
       expect(transaction.id).to_not be_nil
-      Cycad.purge_all_transactions
     end
   end
 
@@ -29,7 +28,7 @@ RSpec.describe Cycad do
     before { Cycad.add_transaction(transaction) }
 
     it 'removes an existing transaction' do
-      Cycad.remove_transaction(transaction.id)
+      Cycad.remove_transaction(transaction)
       expect(Cycad.repo.transactions).to_not include(transaction)
     end
   end
@@ -77,7 +76,6 @@ RSpec.describe Cycad do
       end
 
       before do
-        Cycad.purge_all_transactions
         Cycad.add_transaction(existing_transaction)
       end
 
@@ -99,7 +97,6 @@ RSpec.describe Cycad do
     end
 
     before do
-      Cycad.purge_all_transactions
       Cycad.add_transaction(transaction1)
       Cycad.add_transaction(transaction2)
       Cycad.add_transaction(transaction3)
