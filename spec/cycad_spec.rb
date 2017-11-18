@@ -48,9 +48,12 @@ RSpec.describe Cycad do
       end
 
       context '.tag_transaction' do
+        let(:tag) { Cycad::Tag.new('Xmas 2017') }
+        
+        before { Cycad.repo.persist_tag(tag) }
+        
         it 'adds an existing tag to a transaction' do
-          tag = Cycad::Tag.new('Xmas 2017')
-          Cycad.tag_transaction(existing_transaction.id, tag)
+          Cycad.tag_transaction(existing_transaction.id, tag.id)
           expect(existing_transaction.tags).to contain_exactly(tag)
         end
       end

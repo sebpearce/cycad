@@ -82,8 +82,9 @@ module Cycad
       repo.update_transaction(transaction, args)
     end
 
-    def tag_transaction(id, tag)
-      transaction = repo.find_transaction(id)
+    def tag_transaction(transaction_id, tag_id)
+      transaction = repo.find_transaction(transaction_id)
+      tag = repo.find_tag(tag_id)
       Tagger.attach_tag(transaction, tag)
     end
 
