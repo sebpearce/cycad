@@ -24,6 +24,11 @@ require 'cycad/validators/transaction_validator'
 # Notes
 
 # - We have to persist categories and tags as well.
+# - In Cycad's .update_transaction, the spec only checks to see if a var on
+#   the transaction has changed, but if we were using a real DB, wouldn't it
+#   need to query the DB to see if the change has been persisted?
+# - Is it OK to use a method from somewhere else in the before block?
+#   e.g. Cycad.repo.persist_transaction(transaction1) in cycad_spec
 
 
 module Cycad
@@ -31,24 +36,54 @@ module Cycad
     def repo
       @repo ||= TransactionsRepo::MemoryRepo.new
     end
-    
-    def add_transaction(transaction)
+
+    def add_category(name)
+      category = Cycad::Category.new(name)
+      repo.persist_category(category)
+    end
+
+    def rename_category(id, new_name)
+      category = repo.find_category(id)
+      repo.rename_category(category, new_name)
+    end
+
+    def remove_category(id)
+      category = repo.find_category(id)
+      repo.purge_category(category)
+    end
+
+    def add_tag(name)
+      tag = Cycad::Tag.new(name)
+      repo.persist_tag(tag)
+    end
+
+    def rename_tag(id, new_name)
+      tag = repo.find_tag(id)
+      repo.rename_tag(tag, new_name)
+    end
+
+    def remove_tag(id)
+      tag = repo.find_tag(id)
+      repo.purge_tag(tag)
+    end
+
+    def add_transaction(args = {})
+      transaction = Cycad::Transaction.new(args)
       repo.persist_transaction(transaction)
     end
 
-    def remove_transaction(transaction)
+    def remove_transaction(id)
+      transaction = repo.find_transaction(id)
       repo.purge_transaction(transaction)
     end
 
-    def find_transaction(id)
-      repo.find_transaction(id)
+    def update_transaction(id, args)
+      transaction = repo.find_transaction(id)
+      repo.update_transaction(transaction, args)
     end
 
-    def purge_all
-      repo.purge_all
-    end
-
-    def tag_transaction(transaction, tag)
+    def tag_transaction(id, tag)
+      transaction = repo.find_transaction(id)
       Tagger.attach_tag(transaction, tag)
     end
 
@@ -74,6 +109,10 @@ module Cycad
       end
 
       result
+    end
+
+    def purge_all
+      repo.purge_all
     end
   end
 end

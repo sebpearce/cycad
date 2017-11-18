@@ -32,6 +32,11 @@ module Cycad
 
       def persist_category(category)
         categories << category
+        category
+      end
+
+      def find_category(id)
+        categories.find { |category| category.id == id }
       end
 
       def rename_category(category, new_name)
@@ -44,6 +49,11 @@ module Cycad
 
       def persist_tag(tag)
         tags << tag
+        tag
+      end
+      
+      def find_tag(id)
+        tags.find { |tag| tag.id == id }
       end
 
       def rename_tag(tag, new_name)

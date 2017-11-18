@@ -68,6 +68,18 @@ RSpec.describe Cycad::TransactionsRepo::MemoryRepo do
       end
     end
 
+    context '.find_category' do
+      before do
+        repo.persist_category(category1)
+        @the_id = category1.id
+      end
+
+      it 'finds a category' do
+        found = repo.find_category(@the_id)
+        expect(found).to eq(category1)
+      end
+    end
+
     context '.purge_category' do
       before { repo.persist_category(category1) }
 
@@ -96,6 +108,18 @@ RSpec.describe Cycad::TransactionsRepo::MemoryRepo do
         expect(repo.tags).to_not include(tag1)
         repo.persist_tag(tag1)
         expect(repo.tags).to include(tag1)
+      end
+    end
+
+    context '.find_tag' do
+      before do
+        repo.persist_tag(tag1)
+        @the_id = tag1.id
+      end
+
+      it 'finds a tag' do
+        found = repo.find_tag(tag1.id)
+        expect(found).to eq(tag1)
       end
     end
 
