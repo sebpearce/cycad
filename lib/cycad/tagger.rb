@@ -5,16 +5,11 @@ module Cycad
     end
 
     def self.attach_tag(transaction, tag)
-      # could we make this immutable instead?
-      transaction.tags << tag.id
+      transaction.tags << tag
     end
 
     def self.remove_tag(transaction, tag)
-      transaction.tags.delete(tag.id)
-    end
-
-    def self.rename_tag(tag, new_name)
-      tag.name = new_name
+      transaction.tags.delete(tag)
     end
   end
 end

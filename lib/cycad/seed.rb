@@ -23,5 +23,5 @@ transaction_category_names = %w[
 ]
 
 @categories = transaction_category_names.map do |name|
-  Cycad::TransactionCategory.new(name: name)
+  Cycad::Category.new(name: name)
 end

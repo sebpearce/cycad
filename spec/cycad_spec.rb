@@ -42,11 +42,11 @@ RSpec.describe Cycad do
       )
       tag = Cycad::Tag.new('Xmas 2017')
       Cycad.tag_transaction(transaction, tag)
-      expect(transaction.tags).to contain_exactly(tag.id)
+      expect(transaction.tags).to contain_exactly(tag)
     end
   end
 
-  context '.purge_all_transactions' do
+  context '.purge_all' do
     context 'when there are transactions in the repo' do
       before do
         Cycad.add_transaction(
@@ -59,7 +59,7 @@ RSpec.describe Cycad do
       end
 
       it 'deletes all of them' do
-        Cycad.purge_all_transactions
+        Cycad.purge_all
         expect(Cycad.repo.count).to eq(0)
       end
     end

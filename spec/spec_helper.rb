@@ -14,7 +14,7 @@ RSpec.configure do |config|
   end
 
   config.before do
-    Cycad.purge_all_transactions
+    Cycad.purge_all
   end
 
   # Focus config so we can prefix f and so on
