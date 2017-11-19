@@ -10,6 +10,7 @@ require 'cycad/filters/amount_filter'
 require 'cycad/filters/category_filter'
 require 'cycad/validators/transaction_validator'
 require 'cycad/validators/category_validator'
+require 'cycad/validators/tag_validator'
 
 # Homework 2017-11-15
 
