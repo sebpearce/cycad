@@ -9,6 +9,7 @@ require 'cycad/filters/date_filter'
 require 'cycad/filters/amount_filter'
 require 'cycad/filters/category_filter'
 require 'cycad/validators/transaction_validator'
+require 'cycad/validators/category_validator'
 
 # Homework 2017-11-15
 
@@ -29,6 +30,10 @@ require 'cycad/validators/transaction_validator'
 #   need to query the DB to see if the change has been persisted?
 # - Is it OK to use a method from somewhere else in the before block?
 #   e.g. Cycad.repo.persist_transaction(transaction1) in cycad_spec
+# - I've changed Cycad's main API to take raw args now instead of instances
+#   of a transaction, for example. How will this work with the web interface
+#   layer? Will it just accept a JSON payload with a command and data and pipe
+#   it through to the methods in cycad.rb?
 
 
 module Cycad
@@ -86,6 +91,12 @@ module Cycad
       transaction = repo.find_transaction(transaction_id)
       tag = repo.find_tag(tag_id)
       Tagger.attach_tag(transaction, tag)
+    end
+
+    def untag_transaction(transaction_id, tag_id)
+      transaction = repo.find_transaction(transaction_id)
+      tag = repo.find_tag(tag_id)
+      Tagger.remove_tag(transaction, tag)
     end
 
     def filter_transactions(date_range: nil, type: nil, category_id: nil)
