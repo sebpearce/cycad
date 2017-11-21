@@ -14,18 +14,13 @@ require 'cycad/validators/tag_validator'
 
 # Homework 2017-11-15
 
-# - Validations!
-# - dry-validations, enforcing schemas
-# - Validating the types of fields
-# - Validate transaction amount is not a zero dollar amount
-# - Notes for a transaction can't be longer than 255 characters
-# - Category has to have a name, and has to be shorter than a specific amount
-# - Tag has to have a name, and has to be shorter than a specific amount
 # - Stretch goal: Hooking it up to rom-rb: [ROM](http://rom-rb.org/) and a real database
 
 # Notes
 
-# - We have to persist categories and tags as well.
+# - We have to persist categories and tags as well - I've added methods for these.
+# - What's the best way to check whether a category/tag exists before adding it?
+#   Would we have to depend on the repo in the validator classes? Seems bad :/
 # - In Cycad's .update_transaction, the spec only checks to see if a var on
 #   the transaction has changed, but if we were using a real DB, wouldn't it
 #   need to query the DB to see if the change has been persisted?
