@@ -43,7 +43,7 @@ RSpec.describe Cycad do
       context '.update_transaction' do
         it 'updates an existing transaction' do
           Cycad.update_transaction(existing_transaction.id, amount: 8)
-          expect(existing_transaction.amount).to eq(8)
+          expect(Cycad.repo.find_transaction(existing_transaction.id).amount).to eq 8
         end
       end
 
@@ -115,12 +115,21 @@ RSpec.describe Cycad do
       end
     end
   end
-  
+
   describe 'categories' do
     context '.add_category' do
-      it 'adds a category' do
-        Cycad.add_category('uni')
-        expect(Cycad.repo.categories.first.name).to eq('uni')
+      context 'when the category name is valid' do
+        it 'adds a category' do
+          Cycad.add_category('uni')
+          expect(Cycad.repo.categories.first.name).to eq('uni')
+        end
+      end
+
+      context 'when the category name is invalid' do
+        it 'returns false' do
+          result = Cycad.add_category('')
+          expect(result.errors[:name]).to eq ["must be filled"]
+        end
       end
     end
 

@@ -3,13 +3,12 @@ require 'dry-validation'
 module Cycad
   module Validators
     class CategoryValidator
-      def self.validate_new(input)
+      def self.validate(input)
         schema = Dry::Validation.Schema do
           required(:name).filled(:str?, max_size?: 32)
         end
 
-        result = schema.call(input)
-        result.success?
+        schema.call(input)
       end
     end
   end

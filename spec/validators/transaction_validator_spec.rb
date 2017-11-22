@@ -2,8 +2,8 @@ require 'spec_helper'
 # require 'dry-validation'
 
 RSpec.describe Cycad::Validators::TransactionValidator do
-  context '.validate_new' do
-    subject { Cycad::Validators::TransactionValidator.validate_new(input) }
+  context '.validate' do
+    subject { Cycad::Validators::TransactionValidator.validate(input) }
 
     context 'when the transaction is valid' do
       let(:input) do

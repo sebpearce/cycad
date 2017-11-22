@@ -12,24 +12,34 @@ require 'cycad/validators/transaction_validator'
 require 'cycad/validators/category_validator'
 require 'cycad/validators/tag_validator'
 
-# Homework 2017-11-15
+# Homework 2017-11-22
 
-# - Stretch goal: Hooking it up to rom-rb: [ROM](http://rom-rb.org/) and a real database
+# - Investigation: Can `CategoryValidator` take a `Category` and validate that,
+# rather than just a pure Hash?
+
+# - Can you move the logic for managing categories or tags to their own
+# classes? Cycad.rb is getting pretty crowded (junk drawer)
+
+# - Think on: how the API from an external user's viewpoint would
+# look like, for instance: how would a Rails controller interact with Cycad to
+# add a category? Would a better method name be `Cycad.add_transaction` or
+# `Cycad::Interactors::Transaction.add` or `Cycad::Actions::Transaction.add`?
+# Or none of the above?
+# > Yes I think that's a very good point. People outside of the gem interacting
+# with it will not care how the gem is internally structured.
+# `Cycad.add_transaction` therefore is probably a good entrypoint to the gem to
+# use. However I wouldn't have that logic in the `Cycad` module. Working inside
+# the gem would be made easier with that logic extracted out to a different
+# class.
+
+# - Create uniqueness checker classes (one for category,
+# one for tag, etc) -- checks the database for existing items
+
+# - `Cycad.add_category` returns wildly different things if the validation
+# succeeds / fails. Can you make it have a common API for both cases?
 
 # Notes
 
-# - We have to persist categories and tags as well - I've added methods for these.
-# - What's the best way to check whether a category/tag exists before adding it?
-#   Would we have to depend on the repo in the validator classes? Seems bad :/
-# - In Cycad's .update_transaction, the spec only checks to see if a var on
-#   the transaction has changed, but if we were using a real DB, wouldn't it
-#   need to query the DB to see if the change has been persisted?
-# - Is it OK to use a method from somewhere else in the before block?
-#   e.g. Cycad.repo.persist_transaction(transaction1) in cycad_spec
-# - I've changed Cycad's main API to take raw args now instead of instances
-#   of a transaction, for example. How will this work with the web interface
-#   layer? Will it just accept a JSON payload with a command and data and pipe
-#   it through to the methods in cycad.rb?
 
 
 module Cycad
@@ -39,6 +49,8 @@ module Cycad
     end
 
     def add_category(name)
+      validation = Cycad::Validators::CategoryValidator.validate({name: name})
+      return validation if validation.failure?
       category = Cycad::Category.new(name)
       repo.persist_category(category)
     end
