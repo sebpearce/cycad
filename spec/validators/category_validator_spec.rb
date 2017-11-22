@@ -2,10 +2,10 @@ require 'spec_helper'
 
 RSpec.describe Cycad::Validators::CategoryValidator do
   context '.validate' do
-    subject { Cycad::Validators::CategoryValidator.validate(input) }
+    subject { Cycad::Validators::CategoryValidator.validate(category) }
 
     context 'when the name is valid' do
-      let(:input) { {name: 'I’m a valid name'} }
+      let(:category) { Cycad::Category.new('I’m a valid name') }
 
       it 'has no errors' do
         expect(subject.errors).to be_empty
@@ -13,18 +13,18 @@ RSpec.describe Cycad::Validators::CategoryValidator do
     end
 
     context 'when the name is more than 32 chars' do
-      let(:input) { {name: '012345678901234567890123456789012'} }
+      let(:category) { Cycad::Category.new('012345678901234567890123456789012') }
 
       it 'returns an error' do
-        expect(subject.errors[:name]).to eq ["size cannot be greater than 32"]
+        expect(subject.errors).to eq({name: ["size cannot be greater than 32"]})
       end
     end
 
     context 'when the name is not provided' do
-      let(:input) { {name: ''} }
+      let(:category) { Cycad::Category.new('') }
 
       it 'returns an error' do
-        expect(subject.errors[:name]).to eq ["must be filled"]
+        expect(subject.errors).to eq({name: ["must be filled"]})
       end
     end
   end

@@ -3,19 +3,24 @@ require 'dry-validation'
 module Cycad
   module Validators
     class TransactionValidator
-      def self.validate(input)
+      def self.validate(transaction)
+        input = {
+          date: transaction.date,
+          amount: transaction.amount,
+          category_id: transaction.category_id,
+          note: transaction.note,
+          tags: transaction.tags,
+        }
+
         schema = Dry::Validation.Schema do
           required(:date).filled(:date?)
-          required(:amount).filled(:int?, gt?: 0)
-          # TODO: check that category id is an existing one
+          required(:amount).filled(:int?, excluded_from?: [0])
           required(:category_id).filled(:str?)
-          optional(:note).filled(:str?, max_size?: 255)
-          # TODO: check that tag ids are existing ones
-          optional(:tags).value(:array?)
+          optional(:note).maybe(:str?, max_size?: 255)
+          optional(:tags).maybe(:array?)
         end
 
-        result = schema.call(input)
-        result.success?
+        schema.call(input)
       end
     end
   end

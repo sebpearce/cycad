@@ -14,9 +14,6 @@ require 'cycad/validators/tag_validator'
 
 # Homework 2017-11-22
 
-# - Investigation: Can `CategoryValidator` take a `Category` and validate that,
-# rather than just a pure Hash?
-
 # - Can you move the logic for managing categories or tags to their own
 # classes? Cycad.rb is getting pretty crowded (junk drawer)
 
