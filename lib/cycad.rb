@@ -11,6 +11,7 @@ require 'cycad/filters/category_filter'
 require 'cycad/validators/transaction_validator'
 require 'cycad/validators/category_validator'
 require 'cycad/validators/tag_validator'
+require 'cycad/interactors/category_interactor'
 
 # Homework 2017-11-22
 
@@ -43,23 +44,6 @@ module Cycad
   class << self
     def repo
       @repo ||= TransactionsRepo::MemoryRepo.new
-    end
-
-    def add_category(name)
-      validation = Cycad::Validators::CategoryValidator.validate({name: name})
-      return validation if validation.failure?
-      category = Cycad::Category.new(name)
-      repo.persist_category(category)
-    end
-
-    def rename_category(id, new_name)
-      category = repo.find_category(id)
-      repo.rename_category(category, new_name)
-    end
-
-    def remove_category(id)
-      category = repo.find_category(id)
-      repo.purge_category(category)
     end
 
     def add_tag(name)

@@ -116,48 +116,6 @@ RSpec.describe Cycad do
     end
   end
 
-  describe 'categories' do
-    context '.add_category' do
-      context 'when the category name is valid' do
-        it 'adds a category' do
-          Cycad.add_category('uni')
-          expect(Cycad.repo.categories.first.name).to eq('uni')
-        end
-      end
-
-      context 'when the category name is invalid' do
-        it 'returns false' do
-          result = Cycad.add_category('')
-          expect(result.errors[:name]).to eq ["must be filled"]
-        end
-      end
-    end
-
-    context '.rename_category' do
-      before do
-        existing_category = Cycad.add_category('food')
-        @the_id = existing_category.id
-      end
-
-      it 'renames a category' do
-        Cycad.rename_category(@the_id, 'NEW_NAME')
-        expect(Cycad.repo.categories.first.name).to eq('NEW_NAME')
-      end
-    end
-
-    context '.remove_category' do
-      before do
-        @category2 = Cycad.add_category('pizza')
-      end
-
-      it 'removes a category' do
-        expect(Cycad.repo.categories).to include(@category2)
-        Cycad.remove_category(@category2.id)
-        expect(Cycad.repo.categories).to_not include(@category2)
-      end
-    end
-  end
-
   describe 'tags' do
     context '.add_tag' do
       it 'adds a tag' do
