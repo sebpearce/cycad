@@ -1,7 +1,7 @@
 module Cycad
   module Interactors
     class Category
-      def self.add(name)
+      def self.create(name)
         category = Cycad::Category.new(name)
         validation = Cycad::Validators::CategoryValidator.validate(category)
         return validation if validation.failure?
