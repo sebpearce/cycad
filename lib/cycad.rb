@@ -4,7 +4,6 @@ require 'cycad/category'
 require 'cycad/transaction'
 require 'cycad/transactions'
 require 'cycad/tag'
-require 'cycad/tagger'
 require 'cycad/filters/date_filter'
 require 'cycad/filters/amount_filter'
 require 'cycad/filters/category_filter'
@@ -12,6 +11,7 @@ require 'cycad/validators/transaction_validator'
 require 'cycad/validators/category_validator'
 require 'cycad/validators/tag_validator'
 require 'cycad/interactors/category_interactor'
+require 'cycad/interactors/tag_interactor'
 
 # Homework 2017-11-22
 
@@ -79,13 +79,13 @@ module Cycad
     def tag_transaction(transaction_id, tag_id)
       transaction = repo.find_transaction(transaction_id)
       tag = repo.find_tag(tag_id)
-      Tagger.attach_tag(transaction, tag)
+      Cycad::Interactors::Tag.attach(transaction, tag)
     end
 
     def untag_transaction(transaction_id, tag_id)
       transaction = repo.find_transaction(transaction_id)
       tag = repo.find_tag(tag_id)
-      Tagger.remove_tag(transaction, tag)
+      Cycad::Interactors::Tag.remove(transaction, tag)
     end
 
     def filter_transactions(date_range: nil, type: nil, category_id: nil)

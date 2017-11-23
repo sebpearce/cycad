@@ -129,7 +129,7 @@ RSpec.describe Cycad do
         existing_tag = Cycad.add_tag('food')
         @the_id = existing_tag.id
       end
-
+      
       it 'renames a tag' do
         expect(Cycad.repo.tags.first.name).to eq('food')
         Cycad.rename_tag(@the_id, 'NEW_NAME')
