@@ -111,32 +111,55 @@ RSpec.describe Cycad::TransactionsRepo::MemoryRepo do
       end
     end
 
-    context '.find_tag' do
+    context 'with an existing tag' do
       before do
         repo.persist_tag(tag1)
-        @the_id = tag1.id
       end
 
-      it 'finds a tag' do
-        found = repo.find_tag(tag1.id)
-        expect(found).to eq(tag1)
+      context '.find_tag' do
+        it 'finds a tag' do
+          found = repo.find_tag(tag1.id)
+          expect(found).to eq(tag1)
+        end
       end
-    end
 
-    context '.rename_tag' do
-      it 'renames a tag' do
-        repo.rename_tag(tag1, 'Birthday 2018')
-        expect(tag1.name).to eq('Birthday 2018')
+      context '.attach_tag' do
+        before do
+          repo.persist_transaction(transaction1)
+        end
+
+        it 'attaches a tag to a transaction' do
+          repo.attach_tag(transaction1, tag1)
+          expect(transaction1.tags).to include(tag1)
+        end
       end
-    end
 
-    context '.purge_tag' do
-      before { repo.persist_tag(tag1) }
+      context '.unattach_tag' do
+        before do
+          repo.persist_transaction(transaction1)
+          repo.attach_tag(transaction1, tag1)
+        end
 
-      it 'purges a tag' do
-        expect(repo.tags).to include(tag1)
-        repo.purge_tag(tag1)
-        expect(repo.tags).to_not include(tag1)
+        it 'unattaches a tag from a transaction' do
+          expect(transaction1.tags).to include(tag1)
+          repo.unattach_tag(transaction1, tag1)
+          expect(transaction1.tags).to_not include(tag1)
+        end
+      end
+
+      context '.rename_tag' do
+        it 'renames a tag' do
+          repo.rename_tag(tag1, 'Birthday 2018')
+          expect(tag1.name).to eq('Birthday 2018')
+        end
+      end
+
+      context '.purge_tag' do
+        it 'purges a tag' do
+          expect(repo.tags).to include(tag1)
+          repo.purge_tag(tag1)
+          expect(repo.tags).to_not include(tag1)
+        end
       end
     end
   end

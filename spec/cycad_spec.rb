@@ -117,19 +117,19 @@ RSpec.describe Cycad do
   end
 
   describe 'tags' do
-    context '.add_tag' do
-      it 'adds a tag' do
-        Cycad.add_tag('Cliff’s birthday')
+    context '.create_tag' do
+      it 'creates a tag' do
+        Cycad.create_tag('Cliff’s birthday')
         expect(Cycad.repo.tags.first.name).to eq('Cliff’s birthday')
       end
     end
 
     context '.rename_tag' do
       before do
-        existing_tag = Cycad.add_tag('food')
+        existing_tag = Cycad.create_tag('food')
         @the_id = existing_tag.id
       end
-      
+
       it 'renames a tag' do
         expect(Cycad.repo.tags.first.name).to eq('food')
         Cycad.rename_tag(@the_id, 'NEW_NAME')
@@ -137,14 +137,14 @@ RSpec.describe Cycad do
       end
     end
 
-    context '.remove_tag' do
+    context '.purge_tag' do
       before do
-        @tag2 = Cycad.add_tag('pizza')
+        @tag2 = Cycad.create_tag('pizza')
       end
-
+      
       it 'removes a tag' do
         expect(Cycad.repo.tags).to include(@tag2)
-        Cycad.remove_tag(@tag2.id)
+        Cycad.purge_tag(@tag2.id)
         expect(Cycad.repo.tags).to_not include(@tag2)
       end
     end

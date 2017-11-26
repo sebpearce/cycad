@@ -51,13 +51,21 @@ module Cycad
         tags << tag
         tag
       end
-      
+
       def find_tag(id)
         tags.find { |tag| tag.id == id }
       end
 
       def rename_tag(tag, new_name)
         tag.name = new_name
+      end
+      
+      def attach_tag(transaction, tag)
+        transaction.tags << tag
+      end
+
+      def unattach_tag(transaction, tag)
+        transaction.tags.delete(tag)
       end
 
       def purge_tag(tag)

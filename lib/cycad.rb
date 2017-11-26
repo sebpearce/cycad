@@ -46,21 +46,6 @@ module Cycad
       @repo ||= TransactionsRepo::MemoryRepo.new
     end
 
-    def add_tag(name)
-      tag = Cycad::Tag.new(name)
-      repo.persist_tag(tag)
-    end
-
-    def rename_tag(id, new_name)
-      tag = repo.find_tag(id)
-      repo.rename_tag(tag, new_name)
-    end
-
-    def remove_tag(id)
-      tag = repo.find_tag(id)
-      repo.purge_tag(tag)
-    end
-
     def add_transaction(args = {})
       transaction = Cycad::Transaction.new(args)
       repo.persist_transaction(transaction)
@@ -76,16 +61,36 @@ module Cycad
       repo.update_transaction(transaction, args)
     end
 
+    def create_category(name)
+      Cycad::Interactors::Category.create(name)
+    end
+
+    def rename_category(id, new_name)
+      Cycad::Interactors::Category.rename(id, new_name)
+    end
+
+    def remove_category(id)
+      Cycad::Interactors::Category.remove(id)
+    end
+
+    def create_tag(name)
+      Cycad::Interactors::Tag.create(name)
+    end
+
+    def rename_tag(id, new_name)
+      Cycad::Interactors::Tag.rename(id, new_name)
+    end
+
+    def purge_tag(id)
+      Cycad::Interactors::Tag.purge(id)
+    end
+
     def tag_transaction(transaction_id, tag_id)
-      transaction = repo.find_transaction(transaction_id)
-      tag = repo.find_tag(tag_id)
-      Cycad::Interactors::Tag.attach(transaction, tag)
+      Cycad::Interactors::Tag.attach(transaction_id, tag_id)
     end
 
     def untag_transaction(transaction_id, tag_id)
-      transaction = repo.find_transaction(transaction_id)
-      tag = repo.find_tag(tag_id)
-      Cycad::Interactors::Tag.remove(transaction, tag)
+      Cycad::Interactors::Tag.unattach(transaction_id, tag_id)
     end
 
     def filter_transactions(date_range: nil, type: nil, category_id: nil)

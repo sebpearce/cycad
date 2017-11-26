@@ -12,7 +12,8 @@ module Cycad
       @id = SecureRandom.uuid
       @tags = tags
     end
-
+    
+    # TODO: This should be in the repo with separate methods for each thing
     def update(args)
       args.each do |key, value|
         instance_variable_set("@#{key}", value)
