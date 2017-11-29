@@ -141,7 +141,7 @@ RSpec.describe Cycad do
       before do
         @tag2 = Cycad.create_tag('pizza')
       end
-      
+
       it 'removes a tag' do
         expect(Cycad.repo.tags).to include(@tag2)
         Cycad.purge_tag(@tag2.id)

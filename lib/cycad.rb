@@ -12,23 +12,9 @@ require 'cycad/validators/category_validator'
 require 'cycad/validators/tag_validator'
 require 'cycad/interactors/category_interactor'
 require 'cycad/interactors/tag_interactor'
+require 'cycad/interactors/transaction_interactor'
 
 # Homework 2017-11-22
-
-# - Can you move the logic for managing categories or tags to their own
-# classes? Cycad.rb is getting pretty crowded (junk drawer)
-
-# - Think on: how the API from an external user's viewpoint would
-# look like, for instance: how would a Rails controller interact with Cycad to
-# add a category? Would a better method name be `Cycad.add_transaction` or
-# `Cycad::Interactors::Transaction.add` or `Cycad::Actions::Transaction.add`?
-# Or none of the above?
-# > Yes I think that's a very good point. People outside of the gem interacting
-# with it will not care how the gem is internally structured.
-# `Cycad.add_transaction` therefore is probably a good entrypoint to the gem to
-# use. However I wouldn't have that logic in the `Cycad` module. Working inside
-# the gem would be made easier with that logic extracted out to a different
-# class.
 
 # - Create uniqueness checker classes (one for category,
 # one for tag, etc) -- checks the database for existing items
@@ -47,18 +33,15 @@ module Cycad
     end
 
     def add_transaction(args = {})
-      transaction = Cycad::Transaction.new(args)
-      repo.persist_transaction(transaction)
+      Cycad::Interactors::Transaction.add(args)
     end
 
     def remove_transaction(id)
-      transaction = repo.find_transaction(id)
-      repo.purge_transaction(transaction)
+      Cycad::Interactors::Transaction.remove(id)
     end
 
     def update_transaction(id, args)
-      transaction = repo.find_transaction(id)
-      repo.update_transaction(transaction, args)
+      Cycad::Interactors::Transaction.update(id, args)
     end
 
     def create_category(name)

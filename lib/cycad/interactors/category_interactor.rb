@@ -12,7 +12,7 @@ module Cycad
         category = Cycad.repo.find_category(id)
         Cycad.repo.rename_category(category, new_name)
       end
-      
+
       def self.remove(id)
         category = Cycad.repo.find_category(id)
         Cycad.repo.purge_category(category)
