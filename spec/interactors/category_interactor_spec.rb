@@ -4,7 +4,9 @@ RSpec.describe Cycad::Interactors::Category do
   context 'self.create' do
     context 'when the category name is valid' do
       it 'adds a category' do
-        Cycad::Interactors::Category.create('uni')
+        result = Cycad::Interactors::Category.create('uni')
+        expect(result.category).to_not be_nil
+        expect(result.category.name).to eq('uni')
         expect(Cycad.repo.categories.first.name).to eq('uni')
       end
     end
@@ -12,6 +14,7 @@ RSpec.describe Cycad::Interactors::Category do
     context 'when the category name is invalid' do
       it 'returns an error' do
         result = Cycad::Interactors::Category.create('')
+        expect(result.category).to be_nil
         expect(result.errors).to eq({name: ["must be filled"]})
       end
     end
@@ -19,7 +22,7 @@ RSpec.describe Cycad::Interactors::Category do
 
   context 'self.rename' do
     before do
-      existing_category = Cycad::Interactors::Category.create('food')
+      existing_category = Cycad::Interactors::Category.create('food').category
       @the_id = existing_category.id
     end
 
@@ -31,7 +34,7 @@ RSpec.describe Cycad::Interactors::Category do
 
   context 'self.remove' do
     before do
-      @category2 = Cycad::Interactors::Category.create('pizza')
+      @category2 = Cycad::Interactors::Category.create('pizza').category
     end
 
     it 'removes a category' do

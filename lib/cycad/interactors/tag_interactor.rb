@@ -1,31 +1,39 @@
+# repo = double
+# allow(Cyad::Interactors:Tag).to receive(:repo) { repo }
+#
+# expect(repo).to receive(:persist_tag)
+# Cycad::Interactors::Tag.create
+#
 module Cycad
   module Interactors
-    class Tag
+    class Tag < Base
       def self.create(name)
         tag = Cycad::Tag.new(name)
-        Cycad.repo.persist_tag(tag)
+        repo.persist_tag(tag)
       end
 
       def self.rename(id, new_name)
-        tag = Cycad.repo.find_tag(id)
-        Cycad.repo.rename_tag(tag, new_name)
+        repo.rename_tag(find_tag(id), new_name)
       end
 
       def self.attach(transaction_id, tag_id)
-        transaction = Cycad.repo.find_transaction(transaction_id)
-        tag = Cycad.repo.find_tag(tag_id)
-        Cycad.repo.attach_tag(transaction, tag)
+        transaction = repo.find_transaction(transaction_id)
+        repo.attach_tag(transaction, find_tag(tag_id))
       end
 
       def self.unattach(transaction_id, tag_id)
-        transaction = Cycad.repo.find_transaction(transaction_id)
-        tag = Cycad.repo.find_tag(tag_id)
-        Cycad.repo.unattach_tag(transaction, tag)
+        transaction = repo.find_transaction(transaction_id)
+        repo.unattach_tag(transaction, find_tag(tag_id))
       end
 
       def self.purge(id)
-        tag = Cycad.repo.find_tag(id)
-        Cycad.repo.purge_tag(tag)
+        repo.purge_tag(find_tag(id))
+      end
+
+      private
+
+      def self.find_tag(id)
+        repo.find_tag(id)
       end
     end
   end
