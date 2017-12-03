@@ -7,20 +7,20 @@ RSpec.describe Cycad do
     let(:transaction_args) do
       {
         date: Date.new(2017, 5, 1),
-        amount: 19.95,
+        amount: 1995,
         category_id: '1337'
       }
     end
 
-    context '.add_transaction' do
-      it 'adds a new transaction' do
-        Cycad.add_transaction(transaction_args)
-        expect(Cycad.repo.transactions.first.amount).to eq(19.95)
+    context '.create_transaction' do
+      it 'creates a new transaction' do
+        Cycad.create_transaction(transaction_args)
+        expect(Cycad.repo.transactions.first.amount).to eq(1995)
       end
     end
 
     context 'with an existing transaction' do
-      let!(:existing_transaction) do
+      let(:existing_transaction) do
         Cycad::Transaction.new(
           amount: 70,
           date: Date.new(2017, 10, 31),
@@ -52,7 +52,7 @@ RSpec.describe Cycad do
 
         before { Cycad.repo.persist_tag(tag) }
 
-        it 'adds an existing tag to a transaction' do
+        it 'attaches an existing tag to a transaction' do
           Cycad.tag_transaction(existing_transaction.id, tag.id)
           expect(existing_transaction.tags).to contain_exactly(tag)
         end
@@ -66,7 +66,7 @@ RSpec.describe Cycad do
           Cycad.tag_transaction(existing_transaction.id, tag.id)
         end
 
-        it 'adds an existing tag to a transaction' do
+        it 'attaches an existing tag to a transaction' do
           expect(existing_transaction.tags).to contain_exactly(tag)
           Cycad.untag_transaction(existing_transaction.id, tag.id)
           expect(existing_transaction.tags).to_not include(tag)
@@ -126,7 +126,7 @@ RSpec.describe Cycad do
 
     context '.rename_tag' do
       before do
-        existing_tag = Cycad.create_tag('food')
+        existing_tag = Cycad.create_tag('food').tag
         @the_id = existing_tag.id
       end
 
@@ -139,7 +139,7 @@ RSpec.describe Cycad do
 
     context '.purge_tag' do
       before do
-        @tag2 = Cycad.create_tag('pizza')
+        @tag2 = Cycad.create_tag('pizza').tag
       end
 
       it 'removes a tag' do

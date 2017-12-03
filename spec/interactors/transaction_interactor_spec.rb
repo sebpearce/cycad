@@ -1,23 +1,27 @@
 require 'spec_helper'
 
 RSpec.describe Cycad::Interactors::Transaction do
-  context 'self.add' do
+  subject { Cycad::Interactors::Transaction }
+
+  context 'self.create' do
     let(:transaction_args) do
       {
         date: Date.new(2017, 5, 1),
-        amount: 19.95,
+        amount: 1995,
         category_id: '1337'
       }
     end
 
-    it 'adds a new transaction' do
-      Cycad::Interactors::Transaction.add(transaction_args)
-      expect(Cycad.repo.transactions.first.amount).to eq(19.95)
+    it 'create a new transaction' do
+      result = subject.create(transaction_args)
+      expect(result.transaction).to_not be_nil
+      expect(result.transaction.amount).to eq 1995
+      expect(Cycad.repo.transactions.first.amount).to eq 1995
     end
   end
 
   context 'with an existing transaction' do
-    let!(:existing_transaction) do
+    let(:existing_transaction) do
       Cycad::Transaction.new(
         amount: 70,
         date: Date.new(2017, 10, 31),
@@ -32,14 +36,16 @@ RSpec.describe Cycad::Interactors::Transaction do
     context 'self.remove' do
       it 'removes an existing transaction' do
         expect(Cycad.repo.transactions).to include(existing_transaction)
-        Cycad::Interactors::Transaction.remove(existing_transaction.id)
+        subject.remove(existing_transaction.id)
         expect(Cycad.repo.transactions).to_not include(existing_transaction)
       end
     end
 
     context 'self.update' do
       it 'updates an existing transaction' do
-        Cycad::Interactors::Transaction.update(existing_transaction.id, amount: 8)
+        result = subject.update(existing_transaction.id, amount: 8)
+        expect(result.transaction).to_not be_nil
+        expect(result.transaction.amount).to eq 8
         expect(Cycad.repo.find_transaction(existing_transaction.id).amount).to eq 8
       end
     end

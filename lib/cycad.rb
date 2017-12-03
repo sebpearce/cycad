@@ -15,16 +15,16 @@ require 'cycad/interactors/category_interactor'
 require 'cycad/interactors/tag_interactor'
 require 'cycad/interactors/transaction_interactor'
 
-# Homework 2017-11-22
+# Homework 2017-11-29
 
-# - Create uniqueness checker classes (one for category,
-# one for tag, etc) -- checks the database for existing items
-
-# - `Cycad.add_category` returns wildly different things if the validation
-# succeeds / fails. Can you make it have a common API for both cases?
+# - Create uniqueness checker classes (one for category, one for tag, etc) -- checks the database for existing items
+# - [dry-rb - dry-validation - Comparison With ActiveModel](http://dry-rb.org/gems/dry-validation/comparison-with-activemodel/) - Section 2.11 uniqueness validator
+# - `schema.with(repo: repo).call(input)`
+  # - Cautious about injecting entire repo, can you inject just a CategoryUniquenessValidator that encapsulated uniqueness logic? It should only have one method to validate the category's uniqueness.
+  # - Possibly initialized like `CategoryUniquenessValidator.new(repo).unique?(name)`
 
 # Notes
-
+# - Does it make sense to return an "EditResult" with the tag/transaction/category in it on a rename, as I've done? Or just a create?
 
 
 module Cycad
@@ -33,8 +33,8 @@ module Cycad
       @repo ||= TransactionsRepo::MemoryRepo.new
     end
 
-    def add_transaction(args = {})
-      Cycad::Interactors::Transaction.add(args)
+    def create_transaction(args = {})
+      Cycad::Interactors::Transaction.create(args)
     end
 
     def remove_transaction(id)
