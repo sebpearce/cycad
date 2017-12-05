@@ -1,6 +1,4 @@
 require 'spec_helper'
-require 'cycad/repo'
-require 'cycad/transaction'
 require 'Date'
 
 RSpec.describe Cycad::TransactionsRepo::MemoryRepo do
