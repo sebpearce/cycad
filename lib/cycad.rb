@@ -1,24 +1,22 @@
 require 'cycad/version'
 require 'cycad/repo'
+require 'cycad/interactor_base'
 require 'cycad/category/category'
-require 'cycad/transaction/transaction'
-require 'cycad/transactions/transactions'
+require 'cycad/category/category_interactor'
+require 'cycad/category/category_validator'
 require 'cycad/tag/tag'
+require 'cycad/tag/tag_interactor'
+require 'cycad/tag/tag_validator'
+require 'cycad/transaction/transaction'
+require 'cycad/transaction/transaction_interactor'
+require 'cycad/transaction/transaction_validator'
 require 'cycad/transaction/filters/date_filter'
 require 'cycad/transaction/filters/amount_filter'
 require 'cycad/transaction/filters/category_filter'
-require 'cycad/transaction/transaction_validator'
-require 'cycad/category/category_validator'
-require 'cycad/tag/tag_validator'
-require 'cycad/interactor_base'
-require 'cycad/category/category_interactor'
-require 'cycad/tag/tag_interactor'
-require 'cycad/transaction/transaction_interactor'
+require 'cycad/transactions/transactions'
 
 # Homework 2017-11-29
 
-# - repository layer should NOT update/save stuff, it's just a collection of objects in memory. updates should happen in the interactors.
-# - rename "find" method to "get" ("find" should take a predicate; ie it's a filter)
 # - Create uniqueness checker classes (one for category, one for tag, etc) -- checks the database for existing items
 # - [dry-rb - dry-validation - Comparison With ActiveModel](http://dry-rb.org/gems/dry-validation/comparison-with-activemodel/) - Section 2.11 uniqueness validator
 # - `schema.with(repo: repo).call(input)`
@@ -26,6 +24,8 @@ require 'cycad/transaction/transaction_interactor'
   # - Possibly initialized like `CategoryUniquenessValidator.new(repo).unique?(name)`
 
 # Notes
+# - One site said: repository layer should NOT update/save stuff, it's just a collection of objects in memory. updates should happen in the interactors.
+# - rename "find" method to "get" ("find" should take a predicate; ie it's a filter)
 # - Does it make sense to return an "EditResult" with the tag/transaction/category in it on a rename, as I've done? Or just a create?
 
 # "Basically, whenever you have to work with several objects of the same type, you should consider introducing a Repository for them. Repositories are specialized by object type and not general. So for a blog application, you may have distinct repositories for blog posts, for comments, for users, for user configurations, for themes, for designs, for or anything you may have multiple instances of." (https://code.tutsplus.com/tutorials/the-repository-design-pattern--net-35804)
@@ -53,71 +53,47 @@ module Cycad
     end
 
     def create_transaction(args = {})
-      Cycad::Interactors::Transaction.create(args)
+      Cycad::Transaction::Interactor.create(args)
     end
 
     def remove_transaction(id)
-      Cycad::Interactors::Transaction.remove(id)
+      Cycad::Transaction::Interactor.remove(id)
     end
 
     def update_transaction(id, args)
-      Cycad::Interactors::Transaction.update(id, args)
+      Cycad::Transaction::Interactor.update(id, args)
     end
 
     def create_category(name)
-      Cycad::Interactors::Category.create(name)
+      Cycad::Category::Interactor.create(name)
     end
 
     def rename_category(id, new_name)
-      Cycad::Interactors::Category.rename(id, new_name)
+      Cycad::Category::Interactor.rename(id, new_name)
     end
 
     def remove_category(id)
-      Cycad::Interactors::Category.remove(id)
+      Cycad::Category::Interactor.remove(id)
     end
 
     def create_tag(name)
-      Cycad::Interactors::Tag.create(name)
+      Cycad::Tag::Interactor.create(name)
     end
 
     def rename_tag(id, new_name)
-      Cycad::Interactors::Tag.rename(id, new_name)
+      Cycad::Tag::Interactor.rename(id, new_name)
     end
 
     def purge_tag(id)
-      Cycad::Interactors::Tag.purge(id)
+      Cycad::Tag::Interactor.purge(id)
     end
 
     def tag_transaction(transaction_id, tag_id)
-      Cycad::Interactors::Tag.attach(transaction_id, tag_id)
+      Cycad::Tag::Interactor.attach(transaction_id, tag_id)
     end
 
     def untag_transaction(transaction_id, tag_id)
-      Cycad::Interactors::Tag.unattach(transaction_id, tag_id)
-    end
-
-    def filter_transactions(date_range: nil, type: nil, category_id: nil)
-      result = repo.transactions
-
-      if date_range && date_range.has_key?(:start_date) && date_range.has_key?(:end_date)
-        result = Filters::DateFilter::DateRange.filter(
-            result,
-            date_range[:start_date],
-            date_range[:end_date]
-          )
-      end
-
-      if type == :income_only
-        result = Filters::AmountFilter::IncomeOnly.filter(result)
-      elsif type == :expenses_only
-        result = Filters::AmountFilter::ExpensesOnly.filter(result)
-      end
-
-      if category_id
-        result = Filters::CategoryFilter.filter(result, category_id)
-      end
-
-      result
+      Cycad::Tag::Interactor.unattach(transaction_id, tag_id)
     end
 
     def purge_all

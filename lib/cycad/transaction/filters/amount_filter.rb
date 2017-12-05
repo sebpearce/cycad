@@ -1,5 +1,5 @@
 module Cycad
-  module Filters
+  module Transaction
     class AmountFilter
       def self.filter(transactions)
         transactions.select do |transaction|

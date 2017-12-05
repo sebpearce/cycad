@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'date'
 
-RSpec.describe Cycad::Filters::CategoryFilter do
+RSpec.describe Cycad::Transaction::CategoryFilter do
   let(:transaction1) { double(Cycad::Transaction, category_id: 6) }
   let(:transaction2) { double(Cycad::Transaction, category_id: 6) }
   let(:transaction3) { double(Cycad::Transaction, category_id: 9) }
@@ -17,7 +17,7 @@ RSpec.describe Cycad::Filters::CategoryFilter do
 
   context 'self.filter_by_category' do
     it 'returns only transactions of that category' do
-      filtered = Cycad::Filters::CategoryFilter.filter(transactions, 6)
+      filtered = Cycad::Transaction::CategoryFilter.filter(transactions, 6)
       expect(filtered).to contain_exactly(transaction1, transaction2)
     end
   end

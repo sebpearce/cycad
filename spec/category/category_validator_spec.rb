@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe Cycad::Validators::CategoryValidator do
+RSpec.describe Cycad::Category::Validator do
   context '.validate' do
-    subject { Cycad::Validators::CategoryValidator.validate(input) }
+    subject { Cycad::Category::Validator.validate(input) }
 
     context 'when the name is valid' do
       let(:input) { {name: 'I’m a valid name'} }

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Cycad::Interactors::Transaction do
-  subject { Cycad::Interactors::Transaction }
+RSpec.describe Cycad::Transaction::Interactor do
+  subject { Cycad::Transaction::Interactor }
 
   context 'self.create' do
     let(:transaction_args) do
@@ -22,7 +22,7 @@ RSpec.describe Cycad::Interactors::Transaction do
 
   context 'with an existing transaction' do
     let(:existing_transaction) do
-      Cycad::Transaction.new(
+      Cycad::Transaction::TransactionEntity.new(
         amount: 70,
         date: Date.new(2017, 10, 31),
         category_id: 'blahblahblah'

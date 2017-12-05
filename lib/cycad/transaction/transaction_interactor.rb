@@ -1,12 +1,12 @@
 module Cycad
-  module Interactors
-    class Transaction < Base
+  module Transaction
+    class Interactor < Cycad::InteractorBase
       EditResult = Struct.new(:transaction, :errors)
-
+      
       def self.create(args)
-        validation = Cycad::Validators::TransactionValidator.validate(args)
+        validation = Cycad::Transaction::Validator.validate(args)
         return EditResult.new(nil, validation.errors) if validation.failure?
-        transaction = Cycad::Transaction.new(args)
+        transaction = Cycad::Transaction::TransactionEntity.new(args)
         repo.persist_transaction(transaction)
         EditResult.new(transaction, {})
       end
@@ -17,7 +17,7 @@ module Cycad
       end
 
       def self.update(id, args)
-        validation = Cycad::Validators::TransactionValidator.partial_validate(args)
+        validation = Cycad::Transaction::Validator.partial_validate(args)
         return EditResult.new(nil, validation.errors) if validation.failure?
         transaction = Cycad.repo.find_transaction(id)
         Cycad.repo.update_transaction(transaction, args)

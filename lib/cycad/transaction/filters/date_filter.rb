@@ -1,5 +1,5 @@
 module Cycad
-  module Filters
+  module Transaction
     class DateFilter
       class DateRange
         def self.filter(transactions, start_date, end_date)

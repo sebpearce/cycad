@@ -1,8 +1,8 @@
 require 'dry-validation'
 
 module Cycad
-  module Validators
-    class TagValidator
+  module Tag
+    class Validator
       def self.validate(input)
         schema = Dry::Validation.Schema do
           required(:name).filled(:str?, max_size?: 32)

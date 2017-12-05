@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'date'
 
-RSpec.describe Cycad::Filters::DateFilter do
+RSpec.describe Cycad::Transaction::DateFilter do
   let(:transaction1) { double(Cycad::Transaction, date: Date.new(2017,10,5)) }
   let(:transaction2) { double(Cycad::Transaction, date: Date.new(2017,10,9)) }
   let(:transaction3) { double(Cycad::Transaction, date: Date.new(2017,10,15)) }
@@ -17,7 +17,7 @@ RSpec.describe Cycad::Filters::DateFilter do
 
   context 'self.filter_by_date_range' do
     it 'finds transactions in a date range' do
-      filtered = Cycad::Filters::DateFilter::DateRange.filter(
+      filtered = Cycad::Transaction::DateFilter::DateRange.filter(
         transactions,
         Date.new(2017,10,5),
         Date.new(2017,10,15)

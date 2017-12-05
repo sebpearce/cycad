@@ -1,8 +1,8 @@
 require 'dry-validation'
 
 module Cycad
-  module Validators
-    class TransactionValidator
+  module Transaction
+    class Validator
       def self.validate(input)
         schema = Dry::Validation.Schema do
           required(:date).filled(:date?)

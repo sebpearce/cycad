@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Cycad::Interactors::Category do
-  subject { Cycad::Interactors::Category }
+RSpec.describe Cycad::Category::Interactor do
+  subject { Cycad::Category::Interactor }
 
   context 'self.create' do
     context 'when the category name is valid' do

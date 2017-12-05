@@ -1,10 +1,10 @@
 require 'spec_helper'
 require 'date'
 
-RSpec.describe Cycad::Transaction do
+RSpec.describe Cycad::Transaction::TransactionEntity do
   context '.initialize' do
     it 'adds a unique id to a new transaction' do
-      new_transaction = Cycad::Transaction.new(
+      new_transaction = Cycad::Transaction::TransactionEntity.new(
         amount: 45,
         date: Date.new(2017, 11, 7),
         category_id: 4
@@ -15,7 +15,7 @@ RSpec.describe Cycad::Transaction do
 
   context '.update' do
     subject do
-      Cycad::Transaction.new(
+      Cycad::Transaction::TransactionEntity.new(
         amount: 45,
         date: Date.new(2017, 11, 7),
         category_id: 4

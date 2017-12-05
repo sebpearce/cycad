@@ -2,23 +2,23 @@
 # allow(Cyad::Interactors:Tag).to receive(:repo) { repo }
 #
 # expect(repo).to receive(:persist_tag)
-# Cycad::Interactors::Tag.create
+# Cycad::Tag::Interactor.create
 #
 module Cycad
-  module Interactors
-    class Tag < Base
+  module Tag
+    class Interactor < Cycad::InteractorBase
       EditResult = Struct.new(:tag, :errors)
 
       def self.create(name)
-        validation = Cycad::Validators::TagValidator.validate(name: name)
+        validation = Cycad::Tag::Validator.validate(name: name)
         return EditResult.new(nil, validation.errors) if validation.failure?
-        tag = Cycad::Tag.new(name)
+        tag = Cycad::Tag::TagEntity.new(name)
         repo.persist_tag(tag)
         EditResult.new(tag, {})
       end
 
       def self.rename(id, new_name)
-        validation = Cycad::Validators::TagValidator.validate(name: name)
+        validation = Cycad::Tag::Validator.validate(name: name)
         return EditResult.new(nil, validation.errors) if validation.failure?
         tag = find_tag(id)
         tag.name = new_name

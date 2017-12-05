@@ -21,7 +21,7 @@ RSpec.describe Cycad do
 
     context 'with an existing transaction' do
       let(:existing_transaction) do
-        Cycad::Transaction.new(
+        Cycad::Transaction::TransactionEntity.new(
           amount: 70,
           date: Date.new(2017, 10, 31),
           category_id: 'blahblahblah'
@@ -48,7 +48,7 @@ RSpec.describe Cycad do
       end
 
       context '.tag_transaction' do
-        let(:tag) { Cycad::Tag.new('Xmas 2017') }
+        let(:tag) { Cycad::Tag::TagEntity.new('Xmas 2017') }
 
         before { Cycad.repo.persist_tag(tag) }
 
@@ -59,7 +59,7 @@ RSpec.describe Cycad do
       end
 
       context '.untag_transaction' do
-        let(:tag) { Cycad::Tag.new('Xmas 2017') }
+        let(:tag) { Cycad::Tag::TagEntity.new('Xmas 2017') }
 
         before do
           Cycad.repo.persist_tag(tag)
@@ -70,47 +70,6 @@ RSpec.describe Cycad do
           expect(existing_transaction.tags).to contain_exactly(tag)
           Cycad.untag_transaction(existing_transaction.id, tag.id)
           expect(existing_transaction.tags).to_not include(tag)
-        end
-      end
-    end
-
-    context '.filter_transactions' do
-      let(:transaction1) { Cycad::Transaction.new(amount: 3, date: Date.new(2010, 9, 1), category_id: 1) }
-      let(:transaction2) { Cycad::Transaction.new(amount: 13, date: Date.new(2017, 9, 5), category_id: 1) }
-      let(:transaction3) { Cycad::Transaction.new(amount: 52, date: Date.new(2017, 10, 5), category_id: 1) }
-      let(:transaction4) { Cycad::Transaction.new(amount: 99, date: Date.new(2017, 10, 15), category_id: 2) }
-      let(:transaction5) { Cycad::Transaction.new(amount: 4000, date: Date.new(2017, 10, 3), category_id: 3) }
-      let!(:all_transactions) do
-        [transaction1, transaction2, transaction3, transaction4, transaction5]
-      end
-
-      before do
-        Cycad.repo.persist_transaction(transaction1)
-        Cycad.repo.persist_transaction(transaction2)
-        Cycad.repo.persist_transaction(transaction3)
-        Cycad.repo.persist_transaction(transaction4)
-        Cycad.repo.persist_transaction(transaction5)
-      end
-
-      context 'when no arguments are provided' do
-        it 'returns all transactions' do
-          expect(Cycad.filter_transactions).to eq(all_transactions)
-        end
-      end
-
-      context 'when a date range and category is provided' do
-        subject do
-          Cycad.filter_transactions(
-            date_range: {
-              start_date: Date.new(2016),
-              end_date: Date.new(2018)
-            },
-            category_id: 1
-          )
-        end
-
-        it 'returns transactions that match that range and category' do
-          is_expected.to eq([transaction2, transaction3])
         end
       end
     end
@@ -154,7 +113,7 @@ RSpec.describe Cycad do
     context 'when there are transactions in the repo' do
       before do
         Cycad.repo.persist_transaction(
-          Cycad::Transaction.new(
+          Cycad::Transaction::TransactionEntity.new(
             date: Date.new(2017, 11, 13),
             amount: 80,
             category_id: 1

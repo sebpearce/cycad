@@ -2,8 +2,8 @@ require 'spec_helper'
 require 'date'
 require 'pry'
 
-RSpec.describe Cycad::Interactors::Tag do
-  subject { Cycad::Interactors::Tag }
+RSpec.describe Cycad::Tag::Interactor do
+  subject { Cycad::Tag::Interactor }
   let(:repo) { double(Cycad::TransactionsRepo::MemoryRepo) }
 
   before do
@@ -23,7 +23,7 @@ RSpec.describe Cycad::Interactors::Tag do
   end
 
   context 'with an existing tag and transaction' do
-    let!(:existing_tag) { Cycad::Tag.new('otter') }
+    let!(:existing_tag) { Cycad::Tag::TagEntity.new('otter') }
     let!(:existing_transaction) do
       Cycad.create_transaction(
         date: Date.new(2017,11,10),

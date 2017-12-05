@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe Cycad::Category do
+RSpec.describe Cycad::Category::CategoryEntity do
   context '.rename' do
-    subject { Cycad::Category.new('bills') }
+    subject { Cycad::Category::CategoryEntity.new('bills') }
 
     it 'sets its new name' do
       subject.rename('phone')
