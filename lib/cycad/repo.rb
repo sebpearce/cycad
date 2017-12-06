@@ -1,5 +1,5 @@
 module Cycad
-  module TransactionsRepo
+  class TransactionsRepo
     class MemoryRepo
       attr_accessor :transactions, :categories, :tags
 

@@ -1,7 +1,7 @@
 require 'dry-validation'
 
 module Cycad
-  module Transaction
+  class Transaction
     class Validator
       def self.validate(input)
         schema = Dry::Validation.Schema do

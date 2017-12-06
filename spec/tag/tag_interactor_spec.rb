@@ -23,7 +23,7 @@ RSpec.describe Cycad::Tag::Interactor do
   end
 
   context 'with an existing tag and transaction' do
-    let!(:existing_tag) { Cycad::Tag::TagEntity.new('otter') }
+    let!(:existing_tag) { Cycad::Tag.new('otter') }
     let!(:existing_transaction) do
       Cycad.create_transaction(
         date: Date.new(2017,11,10),

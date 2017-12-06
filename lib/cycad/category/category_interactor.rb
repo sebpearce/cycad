@@ -1,12 +1,15 @@
+# change these to instance methods so it can be instantiated with a repo passed in
+# see interactor_base.rb
+
 module Cycad
-  module Category
+  class Category
     class Interactor < Cycad::InteractorBase
       EditResult = Struct.new(:category, :errors)
 
       def self.create(name)
         validation = Cycad::Category::Validator.validate(name: name)
         return EditResult.new(nil, validation.errors) if validation.failure?
-        category = Cycad::Category::CategoryEntity.new(name)
+        category = Cycad::Category.new(name)
         repo.persist_category(category)
         EditResult.new(category, {})
       end

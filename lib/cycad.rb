@@ -1,19 +1,19 @@
 require 'cycad/version'
 require 'cycad/repo'
 require 'cycad/interactor_base'
-require 'cycad/category/category'
+require 'cycad/category'
 require 'cycad/category/category_interactor'
 require 'cycad/category/category_validator'
-require 'cycad/tag/tag'
+require 'cycad/tag'
 require 'cycad/tag/tag_interactor'
 require 'cycad/tag/tag_validator'
-require 'cycad/transaction/transaction'
+require 'cycad/transaction'
 require 'cycad/transaction/transaction_interactor'
 require 'cycad/transaction/transaction_validator'
 require 'cycad/transaction/filters/date_filter'
 require 'cycad/transaction/filters/amount_filter'
 require 'cycad/transaction/filters/category_filter'
-require 'cycad/transactions/transactions'
+require 'cycad/transactions'
 
 # Homework 2017-11-29
 
@@ -45,6 +45,11 @@ require 'cycad/transactions/transactions'
 # last - Fetch the last entity from the relation
 # clear - Delete all the records from the relation
 # (https://github.com/hanami/model)
+
+# Notes from session
+# The repo shouldn't know about the objects, just the ID/attributes. So the update method should take an id and attributes, not a transaction and attributes.
+# The interactor tells the Tag to mutate itself (the in-memory domain object) and then tells the repo to persist the new attributes to the corresponding record.
+
 
 module Cycad
   class << self

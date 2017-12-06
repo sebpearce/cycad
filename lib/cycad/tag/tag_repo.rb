@@ -1,5 +1,5 @@
 module Cycad
-  module Tag
+  class Tag
     class TagRepo
       attr_accessor :tags
 

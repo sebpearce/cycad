@@ -1,5 +1,5 @@
 module Cycad
-  module Transaction
+  class Transaction
     class CategoryFilter
       def self.filter(transactions, id)
         transactions.select do |transaction|

@@ -22,7 +22,7 @@ RSpec.describe Cycad::Transaction::Interactor do
 
   context 'with an existing transaction' do
     let(:existing_transaction) do
-      Cycad::Transaction::TransactionEntity.new(
+      Cycad::Transaction.new(
         amount: 70,
         date: Date.new(2017, 10, 31),
         category_id: 'blahblahblah'

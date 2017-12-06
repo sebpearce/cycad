@@ -1,5 +1,5 @@
 module Cycad
-  module Category
+  class Category
     class CategoryRepo
       attr_accessor :categories
 
@@ -18,7 +18,7 @@ module Cycad
       def purge(category)
         categories.delete(category)
       end
-      
+
       def purge_all
         @categories = []
       end

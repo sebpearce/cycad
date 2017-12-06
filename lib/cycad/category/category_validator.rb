@@ -1,7 +1,7 @@
 require 'dry-validation'
 
 module Cycad
-  module Category
+  class Category
     class Validator
       def self.validate(input)
         schema = Dry::Validation.Schema do

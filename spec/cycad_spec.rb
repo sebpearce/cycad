@@ -21,7 +21,7 @@ RSpec.describe Cycad do
 
     context 'with an existing transaction' do
       let(:existing_transaction) do
-        Cycad::Transaction::TransactionEntity.new(
+        Cycad::Transaction.new(
           amount: 70,
           date: Date.new(2017, 10, 31),
           category_id: 'blahblahblah'
@@ -48,7 +48,7 @@ RSpec.describe Cycad do
       end
 
       context '.tag_transaction' do
-        let(:tag) { Cycad::Tag::TagEntity.new('Xmas 2017') }
+        let(:tag) { Cycad::Tag.new('Xmas 2017') }
 
         before { Cycad.repo.persist_tag(tag) }
 
@@ -59,7 +59,7 @@ RSpec.describe Cycad do
       end
 
       context '.untag_transaction' do
-        let(:tag) { Cycad::Tag::TagEntity.new('Xmas 2017') }
+        let(:tag) { Cycad::Tag.new('Xmas 2017') }
 
         before do
           Cycad.repo.persist_tag(tag)
@@ -113,7 +113,7 @@ RSpec.describe Cycad do
     context 'when there are transactions in the repo' do
       before do
         Cycad.repo.persist_transaction(
-          Cycad::Transaction::TransactionEntity.new(
+          Cycad::Transaction.new(
             date: Date.new(2017, 11, 13),
             amount: 80,
             category_id: 1

@@ -1,5 +1,5 @@
 module Cycad
-  module Transaction
+  class Transaction
     class TransactionRepo
       attr_accessor :transactions
 

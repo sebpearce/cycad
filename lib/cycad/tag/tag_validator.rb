@@ -1,7 +1,7 @@
 require 'dry-validation'
 
 module Cycad
-  module Tag
+  class Tag
     class Validator
       def self.validate(input)
         schema = Dry::Validation.Schema do

@@ -5,7 +5,7 @@ require 'Date'
     rand_amount = rand(50) + 1
     rand_date = Date.new(rand(2) + 2016, rand(12) + 1, rand(27) + 1)
     rand_category = rand(10) + 1
-    Cycad::Transaction::TransactionEntity.new(amount: rand_amount, date: rand_date, category_id: rand_category)
+    Cycad::Transaction.new(amount: rand_amount, date: rand_date, category_id: rand_category)
   end
 )
 
@@ -23,5 +23,5 @@ transaction_category_names = %w[
 ]
 
 @categories = transaction_category_names.map do |name|
-  Cycad::Category::CategoryEntity.new(name: name)
+  Cycad::Category.new(name: name)
 end

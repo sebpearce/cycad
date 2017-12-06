@@ -5,14 +5,14 @@
 # Cycad::Tag::Interactor.create
 #
 module Cycad
-  module Tag
+  class Tag
     class Interactor < Cycad::InteractorBase
       EditResult = Struct.new(:tag, :errors)
 
       def self.create(name)
         validation = Cycad::Tag::Validator.validate(name: name)
         return EditResult.new(nil, validation.errors) if validation.failure?
-        tag = Cycad::Tag::TagEntity.new(name)
+        tag = Cycad::Tag.new(name)
         repo.persist_tag(tag)
         EditResult.new(tag, {})
       end
