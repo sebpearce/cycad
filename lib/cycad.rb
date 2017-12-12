@@ -1,5 +1,8 @@
 require 'cycad/version'
 require 'cycad/repo'
+require 'database/category_repo'
+require 'database/transaction_repo'
+require 'database/config_two'
 require 'cycad/interactor_base'
 require 'cycad/category'
 require 'cycad/category/category_interactor'
