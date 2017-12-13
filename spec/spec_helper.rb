@@ -13,9 +13,9 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  config.before do
-    Cycad.purge_all
-  end
+  # config.before do
+  #   Cycad.purge_all
+  # end
 
   # Focus config so we can prefix f and so on
   config.filter_run focus: true

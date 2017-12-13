@@ -3,34 +3,35 @@
 
 module Cycad
   class Category
-    class Interactor < Cycad::InteractorBase
+    class Interactor
       EditResult = Struct.new(:category, :errors)
 
       def self.create(name)
         validation = Cycad::Category::Validator.validate(name: name)
         return EditResult.new(nil, validation.errors) if validation.failure?
-        category = Cycad::Category.new(name)
-        repo.persist_category(category)
+        category = repo.create(name: name)
         EditResult.new(category, {})
       end
 
       def self.rename(id, new_name)
-        validation = Cycad::Category::Validator.validate(name: name)
+        validation = Cycad::Category::Validator.validate(name: new_name)
         return EditResult.new(nil, validation.errors) if validation.failure?
-        category = find_category(id)
-        repo.rename_category(category, new_name)
+        category = repo.rename(id, new_name)
         EditResult.new(category, {})
       end
 
       def self.remove(id)
-        category = find_category(id)
-        repo.purge_category(category)
+        repo.delete(id)
       end
 
       private
 
-      def self.find_category(id)
-        repo.find_category(id)
+      def self.find(id)
+        repo.find(id)
+      end
+
+      def self.repo
+        Cycad::Repository.for(:category)
       end
     end
   end

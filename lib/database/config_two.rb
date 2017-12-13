@@ -45,10 +45,11 @@ rom = ROM.container(:sql, 'sqlite::memory') do |conf|
   end
 end
 
-category_repo = Database::CategoryRepo.new(rom)
-category_repo.create(name: 'Bills')
-category_repo.create(name: 'Parties')
-puts category_repo.all.inspect
+Cycad::Repository.register(:category, Database::CategoryRepo.new(rom))
+
+Cycad::Repository.for(:category).create(name: 'Bills')
+Cycad::Repository.for(:category).create(name: 'Parties')
+puts Cycad::Repository.for(:category).all.inspect
 
 transaction_repo = Database::TransactionRepo.new(rom)
 transaction_repo.create(
@@ -71,4 +72,4 @@ transaction_repo.create(
 )
 
 puts transaction_repo.all.inspect
-# puts category_repo.aggregate(:transactions).one.inspect
+# puts Cycad::Repository.for(:category).aggregate(:transactions).one.inspect

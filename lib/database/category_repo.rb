@@ -15,5 +15,9 @@ module Database
     def all
       categories.to_a
     end
+
+    # def rename(id, new_name)
+    #
+    # end
   end
 end

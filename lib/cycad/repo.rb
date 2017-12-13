@@ -1,9 +1,15 @@
 module Cycad
-  class Repo
-    # def_delegator :update, to: :database
+  class Repository
+      def self.register(type, repo)
+        repositories[type] = repo
+      end
 
-    def initialize(database)
-      @database = database
-    end
-  end
+      def self.repositories
+        @repositories ||= {}
+      end
+
+      def self.for(type)
+        repositories[type]
+      end
+   end
 end
