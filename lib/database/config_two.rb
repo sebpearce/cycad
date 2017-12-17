@@ -52,33 +52,33 @@ end
 
 Cycad::Repository.register(:category, Database::CategoryRepo.new(rom))
 
-Cycad::Repository.for(:category).create(name: 'Bills')
-Cycad::Repository.for(:category).create(name: 'Parties')
+bills = Cycad::Repository.for(:category).create(name: 'Bills')
+parties = Cycad::Repository.for(:category).create(name: 'Parties')
 puts Cycad::Repository.for(:category).all.inspect
 
-transaction_repo = Database::TransactionRepo.new(rom)
-transaction_repo.create(
+Cycad::Repository.register(:transaction, Database::TransactionRepo.new(rom))
+Cycad::Repository.for(:transaction).create(
   date: Date.new(2017, 6, 5),
   amount: 250,
   note: 'I am a note',
-  category_id: Cycad::Repository.for(:category).query(name: 'Bills').first.id
+  category_id: bills.id
 )
-transaction_repo.create(
+Cycad::Repository.for(:transaction).create(
   date: Date.new(2017, 1, 1),
   amount: 990,
   note: 'Eat cheese',
-  category_id: Cycad::Repository.for(:category).query(name: 'Parties').first.id
+  category_id: bills.id
 )
-transaction_repo.create(
+Cycad::Repository.for(:transaction).create(
   date: Date.new(2017, 4, 2),
   amount: 1000,
-  category_id: Cycad::Repository.for(:category).query(name: 'Parties').first.id,
-  tags: 'blah'
+  category_id: parties.id,
+  tags: 'blah bloop'
 )
 
-puts transaction_repo.all.inspect
-puts transaction_repo.all.first.date
-puts transaction_repo.all.first.category_id
-puts Cycad::Repository.for(:category).by_id(transaction_repo.all.first.category_id).name
+puts Cycad::Repository.for(:transaction).all.inspect
+puts Cycad::Repository.for(:transaction).all.first.date
+puts Cycad::Repository.for(:transaction).all.first.category_id
+puts Cycad::Repository.for(:category).by_id(Cycad::Repository.for(:transaction).all.first.category_id).name
 
 # puts Cycad::Repository.for(:category).aggregate(:transactions).one.inspect
