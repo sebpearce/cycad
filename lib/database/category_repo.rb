@@ -16,8 +16,8 @@ module Database
       categories.to_a
     end
 
-    # def rename(id, new_name)
-    #
-    # end
+    def rename(id, new_name)
+      update(id, name: new_name)
+    end
   end
 end

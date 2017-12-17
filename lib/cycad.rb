@@ -1,8 +1,8 @@
 require 'cycad/version'
 require 'cycad/repo'
+require 'database/config_two'
 require 'database/category_repo'
 require 'database/transaction_repo'
-require 'database/config_two'
 require 'cycad/interactor_base'
 require 'cycad/category'
 require 'cycad/category/category_interactor'
@@ -52,6 +52,10 @@ require 'cycad/transactions'
 # Notes from session
 # The repo shouldn't know about the objects, just the ID/attributes. So the update method should take an id and attributes, not a transaction and attributes.
 # The interactor tells the Tag to mutate itself (the in-memory domain object) and then tells the repo to persist the new attributes to the corresponding record.
+#
+Cycad::Repository.register(:category, Database::CategoryRepo.new(Database::Config::Rom))
+Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database::Config::Rom))
+
 
 
 module Cycad
