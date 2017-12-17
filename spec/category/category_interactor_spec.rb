@@ -45,7 +45,7 @@ RSpec.describe Cycad::Category::Interactor do
 
     context 'when the category name is invalid' do
       it 'returns an error' do
-        result = subject.rename(@the_id, '')
+        result = subject.rename('id', '')
         expect(result.category).to be_nil
         expect(result.errors).to eq({name: ['must be filled']})
       end
