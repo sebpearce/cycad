@@ -1,60 +1,85 @@
-require 'rom'
-require 'rom-sql'
 require 'date'
+require 'rom'
+require 'rom-repository'
+require 'securerandom'
 
-rom = ROM.container(:sql, 'sqlite::memory') do |config|
-  config.default.create_table(:categories) do
-    # primary_key :id, String, auto
-    column :id, String, null: false
-    column :name, String, null: false
-  end
-  
-  config.default.create_table(:tags) do
-    primary_key :id
-    column :name, String, null: false
-  end
-
-  config.default.create_table(:transactions) do
-    primary_key :id
-    foreign_key :category_id, :categories
-    column :amount, Integer, null: false
-    column :date, Date, null: false
-    column :note, String
-  end
-
-  config.relation(:categories) do
-    schema(infer: true) do
-      attribute :id, ROM::SQL::Types::String.meta(primary_key: true)
-      associations do
-        has_many :transactions
+module Database
+  class Config
+    Rom = ROM.container(:sql, 'sqlite::memory') do |conf|
+      conf.default.create_table(:categories) do
+        primary_key :id
+        column :name, String, null: false
       end
-    end
-  end
 
-  config.relation(:tags) do
-    schema(infer: true) do
-      associations do
-        has_many :transactions
+      conf.default.create_table(:transactions) do
+        # primary_key is a shortcut for the annotation: Types::Int.meta(primary_key: true)
+        primary_key :id
+        foreign_key :category_id, :categories, null: false
+        column :amount, Integer, null: false
+        column :date, Date, null: false
+        column :note, String
+        column :tags, String
       end
-    end
-  end
 
-  config.relation(:transactions) do
-    schema(infer: true) do
-      associations do
-        belongs_to :category, as: :category_id
-        has_many :tags
+      conf.relation(:categories) do
+        schema do
+          attribute :id, ROM::Types::Int
+          attribute :name, ROM::Types::String
+
+          primary_key :id
+
+          associations do
+            has_many :transactions
+          end
+        end
+      end
+
+      conf.relation(:transactions) do
+        schema do
+          attribute :id, ROM::Types::Int
+          attribute :category_id, ROM::SQL::Types::ForeignKey(:categories, ROM::Types::String)
+          attribute :amount, ROM::Types::Int
+          attribute :date, ROM::Types::Date
+          attribute :note, ROM::Types::String
+          attribute :tags, ROM::Types::String
+
+          primary_key :id
+
+          associations do
+            belongs_to :category
+          end
+        end
       end
     end
   end
 end
 
-cat_repo = Database::CategoryRepo.new(rom)
-puts cat_repo.inspect
-cat_repo.create(
-  id: 'this_is_the_id',
-  name: 'Bills'
-)
-puts cat_repo.name
-# cat_repo.delete('this_is_the_id')
-# puts cat_repo.name
+# bills = Cycad::Repository.for(:category).create(name: 'Bills')
+# parties = Cycad::Repository.for(:category).create(name: 'Parties')
+# puts Cycad::Repository.for(:category).all.inspect
+#
+# Cycad::Repository.for(:transaction).create(
+#   date: Date.new(2017, 6, 5),
+#   amount: 250,
+#   note: 'I am a note',
+#   category_id: bills.id
+# )
+# Cycad::Repository.for(:transaction).create(
+#   date: Date.new(2017, 1, 1),
+#   amount: 990,
+#   note: 'Eat cheese',
+#   category_id: bills.id
+# )
+# Cycad::Repository.for(:transaction).create(
+#   date: Date.new(2017, 4, 2),
+#   amount: 1000,
+#   category_id: parties.id,
+#   tags: 'blah bloop'
+# )
+#
+# puts Cycad::Repository.for(:transaction).all.inspect
+# puts Cycad::Repository.for(:transaction).all.first.date
+# puts Cycad::Repository.for(:transaction).all.first.category_id
+# puts Cycad::Repository.for(:category).by_id(Cycad::Repository.for(:transaction).all.first.category_id).name
+#
+# # puts Cycad::Repository.for(:category).aggregate(:transactions).one.inspect

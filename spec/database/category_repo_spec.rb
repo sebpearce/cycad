@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'database/config_two'
+require 'database/config'
 
 RSpec.describe(Database::CategoryRepo) do
   subject { Database::CategoryRepo.new(Database::Config::Rom) }

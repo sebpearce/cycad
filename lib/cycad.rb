@@ -1,22 +1,17 @@
 require 'cycad/version'
 require 'cycad/repo'
-require 'database/config_two'
+require 'database/config'
 require 'database/category_repo'
 require 'database/transaction_repo'
-require 'cycad/interactor_base'
 require 'cycad/category'
 require 'cycad/category/category_interactor'
 require 'cycad/category/category_validator'
-require 'cycad/tag'
-require 'cycad/tag/tag_interactor'
-require 'cycad/tag/tag_validator'
 require 'cycad/transaction'
 require 'cycad/transaction/transaction_interactor'
 require 'cycad/transaction/transaction_validator'
 require 'cycad/transaction/filters/date_filter'
 require 'cycad/transaction/filters/amount_filter'
 require 'cycad/transaction/filters/category_filter'
-require 'cycad/transactions'
 
 # Homework 2017-11-29
 
@@ -60,10 +55,6 @@ Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database:
 
 module Cycad
   class << self
-    def repo
-      @repo ||= TransactionsRepo::MemoryRepo.new
-    end
-
     def create_transaction(args = {})
       Cycad::Transaction::Interactor.create(args)
     end
@@ -88,28 +79,6 @@ module Cycad
       Cycad::Category::Interactor.remove(id)
     end
 
-    def create_tag(name)
-      Cycad::Tag::Interactor.create(name)
-    end
-
-    def rename_tag(id, new_name)
-      Cycad::Tag::Interactor.rename(id, new_name)
-    end
-
-    def purge_tag(id)
-      Cycad::Tag::Interactor.purge(id)
-    end
-
-    def tag_transaction(transaction_id, tag_id)
-      Cycad::Tag::Interactor.attach(transaction_id, tag_id)
-    end
-
-    def untag_transaction(transaction_id, tag_id)
-      Cycad::Tag::Interactor.unattach(transaction_id, tag_id)
-    end
-
-    def purge_all
-      repo.purge_all
-    end
+    # purge_all
   end
 end
