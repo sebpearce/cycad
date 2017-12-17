@@ -13,13 +13,6 @@ module Cycad
       @tags = tags
     end
 
-    # TODO: This should be in the repo with separate methods for each thing
-    def update(args)
-      args.each do |key, value|
-        instance_variable_set("@#{key}", value)
-      end
-    end
-
     def inspect
       to_s
     end

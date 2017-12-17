@@ -1,5 +1,7 @@
 require 'cycad/version'
 require 'cycad/repo'
+require 'in_memory_db/category_repo'
+require 'in_memory_db/transaction_repo'
 require 'database/config'
 require 'database/category_repo'
 require 'database/transaction_repo'

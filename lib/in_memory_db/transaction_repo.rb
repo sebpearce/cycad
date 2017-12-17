@@ -1,5 +1,5 @@
 module Cycad
-  class Transaction
+  module InMemoryDB
     class TransactionRepo
       attr_accessor :transactions
 
@@ -15,7 +15,7 @@ module Cycad
       def find_by_id(id)
         transactions.find { |transaction| transaction.id == id }
       end
-      
+
       def update(transaction, args = {})
         transaction.update(args)
       end
@@ -23,7 +23,11 @@ module Cycad
       def count
         transactions.count
       end
-      
+
+      def purge(id)
+        transactions.delete(id)
+      end
+
       def purge_all
         @transactions = []
       end
