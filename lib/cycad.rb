@@ -53,8 +53,6 @@ require 'cycad/transaction/filters/category_filter'
 Cycad::Repository.register(:category, Database::CategoryRepo.new(Database::Config::Rom))
 Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database::Config::Rom))
 
-
-
 module Cycad
   class << self
     def create_transaction(args = {})

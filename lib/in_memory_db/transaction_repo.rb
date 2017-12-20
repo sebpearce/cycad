@@ -1,14 +1,21 @@
+require 'ostruct'
+
 module Cycad
   module InMemoryDB
     class TransactionRepo
-      Transaction = Struct.new(
-        :id,
-        :date,
-        :amount,
-        :category_id,
-        :note,
-        :tags
-      )
+      class Transaction
+        attr_reader :id
+        attr_accessor :date, :amount, :category_id, :note, :tags
+
+        def initialize(id:, date:, amount:, category_id:, note: nil, tags: nil)
+          @id = id
+          @date = date
+          @amount = amount
+          @category_id = category_id
+          @note = note
+          @tags = tags
+        end
+      end
 
       attr_accessor :transactions
 
@@ -17,14 +24,14 @@ module Cycad
         @id = 0
       end
 
-      def create(args)
+      def create(date:, amount:, category_id:, note: nil, tags: nil)
         new_transaction = Transaction.new(
-          @id,
-          args[:date],
-          args[:amount],
-          args[:category_id],
-          args[:note],
-          args[:tags]
+          id: @id,
+          date: date,
+          amount: amount,
+          category_id: category_id,
+          note: note,
+          tags: tags
         )
         @transactions << new_transaction
         @id += 1
@@ -45,31 +52,11 @@ module Cycad
       end
 
       def update(id, args)
-        # TODO basic validation here and clean up the mess below
         transaction = by_id(id)
-        transaction.date = args[:date] if args[:date] != nil
-        transaction.amount = args[:amount] if args[:amount] != nil
-        transaction.category_id = args[:category_id] if args[:category_id] != nil
-        transaction.note = args[:note] if args[:note] != nil
-        transaction.tags = args[:tags] if args[:tags] != nil
+        [:date, :amount, :category_id, :note, :tags].each do |attr|
+          transaction.send("#{attr}=", args[attr]) if args[attr]
+        end
         transaction
-      end
-
-      private
-
-      def update_amount
-      end
-
-      def update_date
-      end
-
-      def update_category
-      end
-
-      def update_note
-      end
-
-      def update_tags
       end
     end
   end
