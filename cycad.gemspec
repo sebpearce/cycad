@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec'
   spec.add_dependency 'dry-validation'
+  spec.add_dependency 'dry-transaction'
   spec.add_dependency 'sqlite3'
   spec.add_dependency 'rom'
   spec.add_dependency 'rom-sql'

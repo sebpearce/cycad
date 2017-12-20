@@ -1,17 +1,18 @@
 require 'spec_helper'
 
 RSpec.describe Cycad::Transaction::Interactor do
+  include Dry::Monads::Result::Mixin
   subject { Cycad::Transaction::Interactor }
 
-  let(:repo) do
-    double(:repo)
-  end
-
-  before do
-    allow(Cycad::Repository).to receive(:for).with(:transaction).and_return(repo)
-  end
+  let(:repo) { double }
+  before { allow(subject).to receive(:repo) { repo } }
 
   context 'self.create' do
+    let(:usecase) { double }
+    before do
+      allow(subject).to receive(:create_usecase) { usecase }
+    end
+
     context 'when the input is valid' do
       let(:transaction_args) do
         {
@@ -20,13 +21,16 @@ RSpec.describe Cycad::Transaction::Interactor do
           category_id: '1337'
         }
       end
+      let(:transaction) { double(amount: 1995) }
 
       it 'create a new transaction' do
-        transaction = double(:transaction, transaction_args)
-        expect(repo).to receive(:create).with(transaction_args).and_return(transaction)
+        expect(usecase).to receive(:call) { Success(transaction) }
         result = subject.create(transaction_args)
-        expect(result.transaction).to_not be_nil
-        expect(result.transaction.amount).to eq(1995)
+        expect(result).to be_success
+
+        transaction = result.value
+        expect(transaction).to_not be_nil
+        expect(transaction.amount).to eq(1995)
       end
     end
 
@@ -38,13 +42,13 @@ RSpec.describe Cycad::Transaction::Interactor do
           category_id: '1337'
         }
       end
+      let(:errors) { { date: ['must be a date'] } }
 
       it 'returns an error' do
-        transaction = double(:transaction, transaction_args)
-        expect(repo).to_not receive(:create)
+        expect(usecase).to receive(:call) { Failure(errors) }
         result = subject.create(transaction_args)
-        expect(result.transaction).to be_nil
-        expect(result.errors).to eq({date: ['must be a date']})
+        expect(result).to be_a_failure
+        errors = result.value
       end
     end
   end
