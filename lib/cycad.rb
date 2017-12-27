@@ -56,7 +56,7 @@ Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database:
 module Cycad
   class << self
     def create_transaction(args = {})
-      Cycad::Transaction::Interactor.create(args)
+      Cycad::Transaction::UseCases::Create.new.call(args)
     end
 
     def remove_transaction(id)
