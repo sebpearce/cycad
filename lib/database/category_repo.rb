@@ -12,12 +12,20 @@ module Database
       categories.by_pk(id).one!
     end
 
+    def by_name(name)
+      categories.where(name: name).one!
+    end
+
     def all
       categories.to_a
     end
 
     def rename(id, new_name)
       update(id, name: new_name)
+    end
+
+    def delete_all
+      categories.delete
     end
   end
 end

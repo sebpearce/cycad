@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Cycad::Transaction::Validator do
   context 'self.validate' do
-    subject { Cycad::Transaction::Validator.validate(input) }
+    subject { Cycad::Transaction::Validator.validate_for_create(input) }
 
     context 'when the transaction is valid' do
       let(:input) do
@@ -138,7 +138,7 @@ RSpec.describe Cycad::Transaction::Validator do
   end
 
   context 'self.partial_validate' do
-    subject { Cycad::Transaction::Validator.partial_validate(input) }
+    subject { Cycad::Transaction::Validator.validate_for_update(input) }
 
     context 'when only a correct date is passed in' do
       let(:input) do

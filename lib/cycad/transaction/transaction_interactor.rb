@@ -14,7 +14,7 @@ module Cycad
       end
 
       def self.update(id, args)
-        validation = Cycad::Transaction::Validator.partial_validate(args)
+        validation = Cycad::Transaction::Validator.validate_for_update(args)
         return EditResult.new(nil, validation.errors) if validation.failure?
         transaction = repo.update(id, args)
         EditResult.new(transaction, {})

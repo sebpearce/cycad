@@ -3,7 +3,7 @@ require 'dry-validation'
 module Cycad
   class Transaction
     class Validator
-      def self.validate(input)
+      def self.validate_for_create(input)
         schema = Dry::Validation.Schema do
           required(:date).filled(:date?)
           required(:amount).filled(:int?, excluded_from?: [0])
@@ -15,7 +15,7 @@ module Cycad
         schema.call(input)
       end
 
-      def self.partial_validate(input)
+      def self.validate_for_update(input)
         schema = Dry::Validation.Schema do
           optional(:date).filled(:date?)
           optional(:amount).filled(:int?, excluded_from?: [0])

@@ -10,7 +10,8 @@ module Cycad
         step :create
 
         def validate(input)
-          validation = Cycad::Transaction::Validator.validate(input)
+          p input
+          validation = Cycad::Transaction::Validator.validate_for_create(input)
           if validation.success?
             Right(input)
           else

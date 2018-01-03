@@ -14,6 +14,8 @@ require 'cycad/transaction/transaction_validator'
 require 'cycad/transaction/filters/date_filter'
 require 'cycad/transaction/filters/amount_filter'
 require 'cycad/transaction/filters/category_filter'
+require 'cycad/transaction/use_cases/update'
+require 'cycad/transaction/use_cases/create'
 
 # Homework 2017-11-29
 
@@ -63,8 +65,8 @@ module Cycad
       Cycad::Transaction::Interactor.remove(id)
     end
 
-    def update_transaction(id, args)
-      Cycad::Transaction::Interactor.update(id, args)
+    def update_transaction(id, attrs)
+      Cycad::Transaction::UseCases::Update.new.call(id: id, attrs: attrs)
     end
 
     def create_category(name)

@@ -7,14 +7,14 @@ module Cycad
       EditResult = Struct.new(:category, :errors)
 
       def self.create(name)
-        validation = Cycad::Category::Validator.validate(name: name)
+        validation = Cycad::Category::Validator.validate(repo, name: name)
         return EditResult.new(nil, validation.errors) if validation.failure?
         category = repo.create(name: name)
         EditResult.new(category, {})
       end
 
       def self.rename(id, new_name)
-        validation = Cycad::Category::Validator.validate(name: new_name)
+        validation = Cycad::Category::Validator.validate(repo, name: new_name)
         return EditResult.new(nil, validation.errors) if validation.failure?
         category = repo.rename(id, new_name)
         EditResult.new(category, {})
