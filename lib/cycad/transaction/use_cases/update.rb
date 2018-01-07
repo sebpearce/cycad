@@ -9,17 +9,17 @@ module Cycad
         step :validate
         step :update
 
-        def validate(input)
-          validation = Cycad::Transaction::Validator.partial_validate(input)
+        def validate(id:, attrs:)
+          validation = Cycad::Transaction::Validator.validate_for_update (attrs)
           if validation.success?
-            Right(input)
+            Right(id: id, attrs: attrs)
           else
             Left(validation.errors)
           end
         end
 
-        def update(input)
-          transaction = repo.update(input)
+        def update(id:, attrs:)
+          transaction = repo.update(id, attrs)
           Right(transaction)
         end
 

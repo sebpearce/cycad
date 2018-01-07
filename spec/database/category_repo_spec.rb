@@ -5,6 +5,7 @@ RSpec.describe(Database::CategoryRepo) do
   subject { Database::CategoryRepo.new(Database::Config::Rom) }
 
   before do
+    subject.delete_all
     @record = subject.create(name: 'test')
   end
 
@@ -27,6 +28,13 @@ RSpec.describe(Database::CategoryRepo) do
   context '.by_id' do
     it 'returns the corresponding record' do
       result = subject.by_id(@record.id)
+      expect(result.name).to eq('test')
+    end
+  end
+
+  context '.by_name' do
+    it 'returns the corresponding record' do
+      result = subject.by_name(@record.name)
       expect(result.name).to eq('test')
     end
   end

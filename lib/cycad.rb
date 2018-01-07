@@ -12,14 +12,14 @@ require 'cycad/category'
 require 'cycad/category/use_cases/create'
 require 'cycad/category/use_cases/rename'
 require 'cycad/category/use_cases/delete'
-require 'cycad/category/category_interactor'
 require 'cycad/category/category_validator'
 require 'cycad/transaction'
-require 'cycad/transaction/transaction_interactor'
 require 'cycad/transaction/transaction_validator'
 require 'cycad/transaction/filters/date_filter'
 require 'cycad/transaction/filters/amount_filter'
 require 'cycad/transaction/filters/category_filter'
+require 'cycad/transaction/use_cases/update'
+require 'cycad/transaction/use_cases/create'
 
 # Homework 2017-11-29
 
@@ -70,21 +70,21 @@ module Cycad
       Cycad::Transaction::UseCases::Delete.new.delete(id: id)
     end
 
-    def update_transaction(id, args)
-      Cycad::Transaction::UseCases::Update.new.call(id, args)
+    def update_transaction(id, attrs)
+      Cycad::Transaction::UseCases::Update.new.call(id: id, attrs: attrs)
     end
 
     def create_category(name)
       Cycad::Category::UseCases::Create.new.call(name: name)
     end
 
-    def rename_category(id, new_name)
-      Cycad::Category::Interactor.rename(id, new_name)
-    end
-
-    def remove_category(id)
-      Cycad::Category::Interactor.remove(id)
-    end
+    # def rename_category(id, new_name)
+    #   Cycad::Category::Interactor.rename(id, new_name)
+    # end
+    #
+    # def remove_category(id)
+    #   Cycad::Category::Interactor.remove(id)
+    # end
 
     # purge_all
   end

@@ -10,7 +10,7 @@ module Cycad
         step :create
 
         def validate(input)
-          validation = Cycad::Category::Validator.validate(input)
+          validation = Cycad::Category::Validator.validate(repo, input)
           if validation.success?
             Right(input)
           else

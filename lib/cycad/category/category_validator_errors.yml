@@ -1,0 +1,3 @@
+en:
+  errors:
+    unique_name?: "name already exists in the database"

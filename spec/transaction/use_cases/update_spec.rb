@@ -1,13 +1,16 @@
 require 'spec_helper'
 
 RSpec.describe Cycad::Transaction::UseCases::Update do
-  context 'validate' do
+  context '.validate' do
     context 'when a correctly formatted date is specified' do
       let(:date_input) { Date.parse('2017-12-27') }
 
       it 'is valid' do
         result = subject.validate({
-          date: date_input
+          id: 'im_an_id',
+          attrs: {
+            date: date_input
+          }
         })
 
         expect(result).to be_success
@@ -19,7 +22,10 @@ RSpec.describe Cycad::Transaction::UseCases::Update do
 
       it 'is invalid' do
         result = subject.validate({
-          date: date_input
+          id: 'im_an_id',
+          attrs: {
+            date: date_input
+          }
         })
 
         expect(result).to be_failure
@@ -29,7 +35,7 @@ RSpec.describe Cycad::Transaction::UseCases::Update do
     end
   end
 
-  context 'update' do
+  context '.update' do
     let(:repo) { double }
 
     before do
@@ -38,11 +44,25 @@ RSpec.describe Cycad::Transaction::UseCases::Update do
 
     it 'updates the transaction' do
       input = {
-        amount: 5000
+        id: 'im_an_id',
+        attrs: {
+          amount: 5000
+        }
       }
 
-      expect(repo).to receive(:update).with(input).and_return(double)
+      expect(repo).to receive(:update).with(input[:id], input[:attrs]).and_return(double)
       subject.update(input)
+    end
+  end
+
+  context 'blah' do
+    it 'balh' do
+      subject.call(
+        id: 'id',
+        attrs: {
+          date: Date.parse('2017-11-10')
+        }
+      )
     end
   end
 end

@@ -9,7 +9,11 @@ module Database
     end
 
     def by_id(id)
-      categories.by_pk(id).one!
+      categories.by_pk(id).one
+    end
+
+    def by_name(name)
+      categories.where(name: name).one
     end
 
     def all
@@ -18,6 +22,10 @@ module Database
 
     def rename(id, new_name)
       update(id, name: new_name)
+    end
+
+    def delete_all
+      categories.delete
     end
   end
 end
