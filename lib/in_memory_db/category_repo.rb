@@ -17,7 +17,6 @@ module Cycad
         new_category
       end
 
-      # TODO how to make this cleaner?
       def update(id, args)
         return if args[:name] == nil
         category = rename(id, args[:name])

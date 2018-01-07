@@ -5,7 +5,13 @@ require 'in_memory_db/transaction_repo'
 require 'database/config'
 require 'database/category_repo'
 require 'database/transaction_repo'
+require 'cycad/transaction/use_cases/create'
+require 'cycad/transaction/use_cases/update'
+require 'cycad/transaction/use_cases/delete'
 require 'cycad/category'
+require 'cycad/category/use_cases/create'
+require 'cycad/category/use_cases/rename'
+require 'cycad/category/use_cases/delete'
 require 'cycad/category/category_interactor'
 require 'cycad/category/category_validator'
 require 'cycad/transaction'
@@ -59,16 +65,17 @@ module Cycad
       Cycad::Transaction::UseCases::Create.new.call(args)
     end
 
-    def remove_transaction(id)
-      Cycad::Transaction::Interactor.remove(id)
+    def delete_transaction(id)
+      # TODO should this have 1 step and use `call`, like create does?
+      Cycad::Transaction::UseCases::Delete.new.delete(id: id)
     end
 
     def update_transaction(id, args)
-      Cycad::Transaction::Interactor.update(id, args)
+      Cycad::Transaction::UseCases::Update.new.call(id, args)
     end
 
     def create_category(name)
-      Cycad::Category::Interactor.create(name)
+      Cycad::Category::UseCases::Create.new.call(name: name)
     end
 
     def rename_category(id, new_name)
