@@ -43,7 +43,7 @@ RSpec.describe Cycad::Category::Validator do
       let(:input) { {name: 'parsley'} }
 
       it 'returns an error' do
-          expect(subject.errors).to eq({name: ['name already exists in the database']})
+        expect(subject.errors).to eq({name: ['name already exists in the database']})
       end
     end
   end

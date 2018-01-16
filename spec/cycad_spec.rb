@@ -1,23 +1,31 @@
-# require 'spec_helper'
+require 'spec_helper'
 # require 'pry'
 # require 'date'
 #
-# RSpec.describe Cycad do
-#   describe 'transactions' do
-#     let(:transaction_args) do
-#       {
-#         date: Date.new(2017, 5, 1),
-#         amount: 1995,
-#         category_id: '1337'
-#       }
-#     end
-#
-#     context '.create_transaction' do
-#       it 'creates a new transaction' do
-#         Cycad.create_transaction(transaction_args)
-#         expect(Cycad.repo.transactions.first.amount).to eq(1995)
-#       end
-#     end
+RSpec.describe Cycad do
+  describe 'transactions' do
+    let(:transaction_args) do
+      {
+        date: Date.parse('2017-5-1'),
+        amount: 1995,
+        category_id: @id
+      }
+    end
+
+    before do
+      Cycad::Category::UseCases::Create.new.call(name: 'pizza')
+      @id = Cycad::Repository.for(:category).by_name('pizza').id
+    end
+
+    context '.create_transaction' do
+      it 'creates a new transaction' do
+        Cycad.create_transaction(transaction_args)
+        expect(Cycad::Repository.for(:transaction).all.first.amount).to eq(1995)
+        Cycad::Repository.for(:transaction).delete_all
+      end
+    end
+  end
+end
 #
 #     context 'with an existing transaction' do
 #       let(:existing_transaction) do

@@ -9,7 +9,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: Date.new(2017, 5, 4),
           amount: -5,
-          category_id: 'f032923fhd1d',
+          category_id: 4,
         }
       end
 
@@ -23,7 +23,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: '2017/12/12',
           amount: 5,
-          category_id: 'f032923fhd1d'
+          category_id: 23,
         }
       end
 
@@ -37,7 +37,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: Date.new(2017, 5, 4),
           amount: 51.99,
-          category_id: 'f032923fhd1d'
+          category_id: 5,
         }
       end
 
@@ -51,7 +51,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: Date.new(2017, 5, 4),
           amount: 0,
-          category_id: 'f032923fhd1d'
+          category_id: 3,
         }
       end
 
@@ -60,17 +60,17 @@ RSpec.describe Cycad::Transaction::Validator do
       end
     end
 
-    context 'when the category_id is not a string' do
+    context 'when the category_id is not an int' do
       let(:input) do
         {
           date: Date.new(2017, 5, 4),
           amount: 5,
-          category_id: 3
+          category_id: 'foo'
         }
       end
 
       it 'returns an error' do
-        expect(subject.errors).to eq({category_id: ['must be a string']})
+        expect(subject.errors).to eq({category_id: ['must be an integer']})
       end
     end
 
@@ -79,7 +79,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: Date.new(2017, 5, 4),
           amount: 5,
-          category_id: 'f032923fhd1d',
+          category_id: 2,
           note: 583,
         }
       end
@@ -94,7 +94,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: Date.new(2017, 5, 4),
           amount: 5,
-          category_id: 'aj38vn4jfu',
+          category_id: 10,
           note: (1..256).map { 'a' }.join,
         }
       end
@@ -109,7 +109,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: Date.new(2017, 5, 4),
           amount: 5,
-          category_id: 'aj38vn4jfu',
+          category_id: 13,
           tags: 'lalala'
         }
       end
@@ -124,7 +124,7 @@ RSpec.describe Cycad::Transaction::Validator do
         {
           date: Date.new(2017, 5, 4),
           amount: 5,
-          category_id: 'aj38vn4jfu',
+          category_id: 6,
           tags: []
         }
       end

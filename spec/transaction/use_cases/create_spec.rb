@@ -6,7 +6,7 @@ RSpec.describe Cycad::Transaction::UseCases::Create do
       result = subject.validate({
         date: Date.parse('2017-12-20'),
         amount: 20,
-        category_id: '1'
+        category_id: 1
       })
 
       expect(result).to be_success
@@ -15,7 +15,7 @@ RSpec.describe Cycad::Transaction::UseCases::Create do
     it 'is invalid when a date is not specified' do
       result = subject.validate({
         amount: 20,
-        category_id: '1'
+        category_id: 1
       })
 
       expect(result).to be_failure
@@ -35,7 +35,7 @@ RSpec.describe Cycad::Transaction::UseCases::Create do
       input = {
         date: Date.parse('2017-12-20'),
         amount: 20,
-        category_id: '1'
+        category_id: 1
       }
 
       expect(repo).to receive(:create).with(input).and_return(double)

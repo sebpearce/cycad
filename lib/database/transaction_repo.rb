@@ -15,5 +15,9 @@ module Database
     def all
       transactions.to_a
     end
+
+    def delete_all
+      transactions.delete
+    end
   end
 end
