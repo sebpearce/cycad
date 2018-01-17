@@ -2,6 +2,7 @@ require 'date'
 require 'rom'
 require 'rom-repository'
 require 'securerandom'
+require 'cycad/category/category_mapper'
 
 module Database
   class Config
@@ -50,6 +51,8 @@ module Database
           end
         end
       end
+
+      conf.register_mapper(Cycad::CategoryMapper)
     end
   end
 end

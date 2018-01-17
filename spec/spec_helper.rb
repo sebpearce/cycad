@@ -1,6 +1,7 @@
 require 'bundler/setup'
 require 'cycad'
 require 'cycad/repo'
+require_relative 'support/transaction_repo_helper'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -13,9 +14,10 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  # config.before do
-  #   Cycad.purge_all
-  # end
+  config.before db: true do
+    Cycad::Repository.for(:transaction).delete_all
+    Cycad::Repository.for(:category).delete_all
+  end
 
   # Focus config so we can prefix f and so on
   config.filter_run focus: true

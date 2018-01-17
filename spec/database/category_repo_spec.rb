@@ -1,11 +1,10 @@
 require 'spec_helper'
 require 'database/config'
 
-RSpec.describe(Database::CategoryRepo) do
+RSpec.describe Database::CategoryRepo, db: true do
   subject { Database::CategoryRepo.new(Database::Config::Rom) }
 
   before do
-    subject.delete_all
     @record = subject.create(name: 'test')
   end
 

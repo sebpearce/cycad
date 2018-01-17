@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'date'
 require 'database/config'
 
-RSpec.describe(Database::TransactionRepo) do
+RSpec.describe Database::TransactionRepo, db: true do
   subject { Database::TransactionRepo.new(Database::Config::Rom) }
 
   before do

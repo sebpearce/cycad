@@ -4,12 +4,12 @@ module Cycad
   class Transaction
     attr_reader :id, :amount, :date, :note, :category_id, :tags
 
-    def initialize(amount:, date:, note: nil, category_id:, tags: [])
+    def initialize(id:, amount:, date:, note: nil, category_id:, tags: [])
+      @id = id
       @amount = amount
       @date = date
       @note = note
       @category_id = category_id
-      @id = SecureRandom.uuid
       @tags = tags
     end
 

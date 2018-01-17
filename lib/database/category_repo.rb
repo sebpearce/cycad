@@ -2,7 +2,7 @@ require 'rom-repository'
 
 module Database
   class CategoryRepo < ROM::Repository[:categories]
-    commands :create, update: :by_pk, delete: :by_pk
+    commands :create, update: :by_pk, delete: :by_pk, mapper: :category
 
     def query(conditions)
       categories.where(conditions).to_a

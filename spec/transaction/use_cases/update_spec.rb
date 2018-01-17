@@ -54,15 +54,4 @@ RSpec.describe Cycad::Transaction::UseCases::Update do
       subject.update(input)
     end
   end
-
-  context 'blah' do
-    it 'balh' do
-      subject.call(
-        id: 'id',
-        attrs: {
-          date: Date.parse('2017-11-10')
-        }
-      )
-    end
-  end
 end

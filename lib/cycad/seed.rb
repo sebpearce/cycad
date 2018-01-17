@@ -1,19 +1,11 @@
 require 'Date'
 
-@random_transactions = Cycad::Transactions.new(
-  (1..10).map do |x|
-    rand_amount = rand(50) + 1
-    rand_date = Date.new(rand(2) + 2016, rand(12) + 1, rand(27) + 1)
-    rand_category = rand(10) + 1
-    Cycad::Transaction.new(amount: rand_amount, date: rand_date, category_id: rand_category)
-  end
-)
-
 transaction_category_names = %w[
   Salary
   Rent
   Petrol
   Stuff
+  Clothes
   Things
   Walruses
   Fude
@@ -23,5 +15,12 @@ transaction_category_names = %w[
 ]
 
 @categories = transaction_category_names.map do |name|
-  Cycad::Category.new(name: name)
+  Cycad.create_category(name).value
 end
+
+@random_transactions = (1..10).map do |x|
+  rand_amount = rand(50) + 1
+  rand_date = Date.new(rand(2) + 2016, rand(12) + 1, rand(27) + 1)
+  Cycad.create_transaction(amount: rand_amount, date: rand_date, category_id: @categories.sample.id)
+end
+

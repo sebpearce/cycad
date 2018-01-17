@@ -9,11 +9,11 @@ module Database
     end
 
     def by_id(id)
-      transactions.by_pk(id).one!
+      transactions.by_pk(id).one
     end
 
     def all
-      transactions.to_a
+      transactions.map_to(Cycad::Transaction).to_a
     end
 
     def delete_all
