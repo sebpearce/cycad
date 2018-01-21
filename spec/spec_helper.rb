@@ -2,6 +2,7 @@ require 'bundler/setup'
 require 'cycad'
 require 'cycad/repo'
 require_relative 'support/transaction_repo_helper'
+require_relative 'support/category_repo_helper'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

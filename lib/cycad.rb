@@ -22,9 +22,28 @@ require 'cycad/transaction/filters/category_filter'
 require 'cycad/transaction/use_cases/update'
 require 'cycad/transaction/use_cases/create'
 
-# Homework 2017-11-29
+# Homework 2018-01-21
 
-# Notes from session
+# * Use a non-in-memory database so that records actually live longer than the console session
+# * Abstract relations out of database configuration into their own classes
+# * Add migrations to the application and make it so that you can run them
+# * Use `ROM::Struct` in models to enforce types on attributes and to clean up the `initializer` code.
+
+# Notes from homework
+
+# I tried this:
+
+    # context '.create_category' do
+    #   it 'creates a new category' do
+    #     category = Cycad.create_category('food').value
+    #     expect(all_categories).to include(category)
+    #   end
+    # end
+
+# but it failed, because the address of `category` was different to that of the category returned in `all_categories`. It seems each time the mapping happens, a new instance of category is created.
+#
+# see TODO stuff
+#
 
 Cycad::Repository.register(:category, Database::CategoryRepo.new(Database::Config::Rom))
 Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database::Config::Rom))
@@ -35,8 +54,8 @@ module Cycad
       Cycad::Repository.for(:transaction).all
     end
 
-    def create_transaction(args = {})
-      Cycad::Transaction::UseCases::Create.new.call(args)
+    def create_transaction(attrs = {})
+      Cycad::Transaction::UseCases::Create.new.call(attrs)
     end
 
     def delete_transaction(id)
@@ -52,14 +71,13 @@ module Cycad
       Cycad::Category::UseCases::Create.new.call(name: name)
     end
 
-    # def rename_category(id, new_name)
-    #   Cycad::Category::Interactor.rename(id, new_name)
-    # end
-    #
-    # def remove_category(id)
-    #   Cycad::Category::Interactor.remove(id)
-    # end
+    def rename_category(id, new_name)
+      Cycad::Category::UseCases::Rename.new.call(id: id, name: new_name)
+    end
 
-    # purge_all
+    def delete_category(id)
+      # TODO should this have 1 step and use `call`, like create does?
+      Cycad::Category::UseCases::Delete.new.delete(id: id)
+    end
   end
 end

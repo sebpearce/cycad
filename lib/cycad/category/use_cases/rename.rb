@@ -18,8 +18,8 @@ module Cycad
           end
         end
 
-        def rename(input)
-          category = repo.rename(input)
+        def rename(id:, name:)
+          category = repo.rename(id, name)
           Right(category)
         end
 

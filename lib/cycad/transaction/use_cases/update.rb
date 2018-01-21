@@ -10,7 +10,7 @@ module Cycad
         step :update
 
         def validate(id:, attrs:)
-          validation = Cycad::Transaction::Validator.validate_for_update (attrs)
+          validation = Cycad::Transaction::Validator.validate_for_update(attrs)
           if validation.success?
             Right(id: id, attrs: attrs)
           else

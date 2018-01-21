@@ -3,6 +3,7 @@ require 'rom'
 require 'rom-repository'
 require 'securerandom'
 require 'cycad/category/category_mapper'
+require 'cycad/transaction/transaction_mapper'
 
 module Database
   class Config
@@ -53,6 +54,7 @@ module Database
       end
 
       conf.register_mapper(Cycad::CategoryMapper)
+      conf.register_mapper(Cycad::TransactionMapper)
     end
   end
 end

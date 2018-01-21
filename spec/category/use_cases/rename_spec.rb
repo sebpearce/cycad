@@ -31,8 +31,8 @@ RSpec.describe Cycad::Category::UseCases::Rename do
     end
 
     it 'renames the category' do
-      expect(repo).to receive(:rename).with(name: 'a name').and_return(double)
-      subject.rename(name: 'a name')
+      expect(repo).to receive(:rename).with(3, 'a name').and_return(double)
+      subject.rename(id: 3, name: 'a name')
     end
   end
 end
