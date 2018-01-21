@@ -25,6 +25,7 @@ require 'cycad/transaction/use_cases/create'
 # Homework 2018-01-21
 
 # * Use a non-in-memory database so that records actually live longer than the console session
+#     --> http://rom-rb.org/4.0/learn/getting-started/setup-dsl/
 # * Abstract relations out of database configuration into their own classes
 # * Add migrations to the application and make it so that you can run them
 # * Use `ROM::Struct` in models to enforce types on attributes and to clean up the `initializer` code.
