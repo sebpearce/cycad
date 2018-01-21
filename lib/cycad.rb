@@ -29,22 +29,6 @@ require 'cycad/transaction/use_cases/create'
 # * Add migrations to the application and make it so that you can run them
 # * Use `ROM::Struct` in models to enforce types on attributes and to clean up the `initializer` code.
 
-# Notes from homework
-
-# I tried this:
-
-    # context '.create_category' do
-    #   it 'creates a new category' do
-    #     category = Cycad.create_category('food').value
-    #     expect(all_categories).to include(category)
-    #   end
-    # end
-
-# but it failed, because the address of `category` was different to that of the category returned in `all_categories`. It seems each time the mapping happens, a new instance of category is created.
-#
-# see TODO stuff
-#
-
 Cycad::Repository.register(:category, Database::CategoryRepo.new(Database::Config::Rom))
 Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database::Config::Rom))
 
@@ -63,7 +47,6 @@ module Cycad
     end
 
     def delete_transaction(id)
-      # TODO should this have 1 step and use `call`, like create does?
       Cycad::Transaction::UseCases::Delete.new.delete(id: id)
     end
 
@@ -80,7 +63,6 @@ module Cycad
     end
 
     def delete_category(id)
-      # TODO should this have 1 step and use `call`, like create does?
       Cycad::Category::UseCases::Delete.new.delete(id: id)
     end
   end
