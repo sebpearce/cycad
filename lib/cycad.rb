@@ -58,13 +58,17 @@ module Cycad
       Cycad::Transaction::UseCases::Create.new.call(attrs)
     end
 
+    def update_transaction(id, attrs)
+      Cycad::Transaction::UseCases::Update.new.call(id: id, attrs: attrs)
+    end
+
     def delete_transaction(id)
       # TODO should this have 1 step and use `call`, like create does?
       Cycad::Transaction::UseCases::Delete.new.delete(id: id)
     end
 
-    def update_transaction(id, attrs)
-      Cycad::Transaction::UseCases::Update.new.call(id: id, attrs: attrs)
+    def categories
+      Cycad::Repository.for(:category).all
     end
 
     def create_category(name)
