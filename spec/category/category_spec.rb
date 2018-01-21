@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Cycad::Category do
   context '.rename' do
-    subject { Cycad::Category.new('bills') }
+    subject { Cycad::Category.new(id: 3, name: 'bills') }
 
     it 'sets its new name' do
       subject.rename('phone')

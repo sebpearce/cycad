@@ -12,6 +12,7 @@ RSpec.describe Cycad, db: true do
 
     let(:transaction_args) do
       {
+        id: 2,
         date: Date.parse('2017-5-1'),
         amount: 1995,
         category_id: category.id

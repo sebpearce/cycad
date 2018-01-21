@@ -5,8 +5,8 @@ module Cycad
     attr_reader :id
     attr_accessor :name
 
-    def initialize(name)
-      @id = SecureRandom.uuid
+    def initialize(id:, name:)
+      @id = id
       @name = name
     end
 
