@@ -56,33 +56,3 @@ module Database
     end
   end
 end
-
-# bills = Cycad::Repository.for(:category).create(name: 'Bills')
-# parties = Cycad::Repository.for(:category).create(name: 'Parties')
-# puts Cycad::Repository.for(:category).all.inspect
-#
-# Cycad::Repository.for(:transaction).create(
-#   date: Date.new(2017, 6, 5),
-#   amount: 250,
-#   note: 'I am a note',
-#   category_id: bills.id
-# )
-# Cycad::Repository.for(:transaction).create(
-#   date: Date.new(2017, 1, 1),
-#   amount: 990,
-#   note: 'Eat cheese',
-#   category_id: bills.id
-# )
-# Cycad::Repository.for(:transaction).create(
-#   date: Date.new(2017, 4, 2),
-#   amount: 1000,
-#   category_id: parties.id,
-#   tags: 'blah bloop'
-# )
-#
-# puts Cycad::Repository.for(:transaction).all.inspect
-# puts Cycad::Repository.for(:transaction).all.first.date
-# puts Cycad::Repository.for(:transaction).all.first.category_id
-# puts Cycad::Repository.for(:category).by_id(Cycad::Repository.for(:transaction).all.first.category_id).name
-#
-# # puts Cycad::Repository.for(:category).aggregate(:transactions).one.inspect
