@@ -1,7 +1,7 @@
 module Database
   module Relations
     class Categories < ROM::Relation[:sql]
-      schema(:categories, as: :categories) do
+      schema(:categories) do
         attribute :id, ROM::Types::Int
         attribute :name, ROM::Types::String
 

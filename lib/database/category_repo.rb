@@ -5,19 +5,19 @@ module Database
     commands :create, update: :by_pk, delete: :by_pk, mapper: :category
 
     def query(conditions)
-      categories.where(conditions).map_to(Cycad::Category).to_a
+      categories.where(conditions).to_a
     end
 
     def by_id(id)
-      categories.by_pk(id).map_to(Cycad::Category).one
+      categories.by_pk(id).one
     end
 
     def by_name(name)
-      categories.where(name: name).map_to(Cycad::Category).one
+      categories.where(name: name).one
     end
 
     def all
-      categories.map_to(Cycad::Category).to_a
+      categories.to_a
     end
 
     def rename(id, new_name)
@@ -26,6 +26,12 @@ module Database
 
     def delete_all
       categories.delete
+    end
+
+    private
+
+    def categories
+      super.map_to(Cycad::Category)
     end
   end
 end

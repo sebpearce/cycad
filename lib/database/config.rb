@@ -10,7 +10,9 @@ require 'database/transaction_relation'
 
 module Database
   class Config
-    Rom = ROM.container(:sql, 'sqlite::memory') do |conf|
+    Rom = ROM.container(:sql, ENV['DATABASE_URL']) do |conf|
+
+      ######### move to a migration
       conf.default.create_table(:categories) do
         primary_key :id
         column :name, String, null: false
@@ -25,6 +27,7 @@ module Database
         column :note, String
         column :tags, String
       end
+      #########
 
       conf.register_relation(Database::Relations::Categories)
       conf.register_relation(Database::Relations::Transactions)

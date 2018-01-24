@@ -1,3 +1,5 @@
+ENV['DATABASE_URL'] ||= 'sqlite://./test.db'
+
 require 'bundler/setup'
 require 'cycad'
 require 'cycad/repo'
