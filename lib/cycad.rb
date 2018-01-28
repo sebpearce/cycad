@@ -1,3 +1,4 @@
+require 'dotenv/load'
 require 'cycad/version'
 require 'cycad/repo'
 require 'in_memory_db/category_repo'
@@ -29,6 +30,12 @@ require 'cycad/transaction/use_cases/create'
 # * Abstract relations out of database configuration into their own classes
 # * Add migrations to the application and make it so that you can run them
 # * Use `ROM::Struct` in models to enforce types on attributes and to clean up the `initializer` code.
+
+# Homework 2018-01-24
+
+# * Create a hash method in your category and transaction classes
+# * Add migrations to the application and make it so that you can run them on both a development and test database
+# * Submit a pull request to remove register_at
 
 Cycad::Repository.register(:category, Database::CategoryRepo.new(Database::Config::Rom))
 Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database::Config::Rom))
