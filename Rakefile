@@ -1,19 +1,26 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
+require "rom/sql/rake_task"
 
-# wtf is this?
-# RSpec::Core::RakeTask.new(:spec)
+task :default => :spec
 
-task :default => :test
+namespace :db do
+  task :setup do
+    require "database/config"
 
-task :dev do
-  ENV['DATABASE_URL'] = 'sqlite://./dev.db'
-  # couldn't figure out how to use the rakefile besides running shell commands :(
-  sh 'bin/console'
+    ROM::SQL::RakeSupport.env = Database::Config::Rom
+  end
 end
 
-task :test do
-  sh 'rspec'
+task :spec do
+  ENV['DATABASE_URL'] = "sqlite://./spec/test.db"
+  Rake::Task["db:setup"].invoke
+  Rake::Task["db:migrate"].invoke
+  system("rspec")
+  Rake::Task["clean"].invoke
 end
 
-# should we clean up test.db here?
+task :clean do
+  rm_rf "spec/test.db"
+end
+

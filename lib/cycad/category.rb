@@ -18,6 +18,10 @@ module Cycad
       to_s
     end
 
+    def hash
+      [@id, @name].hash
+    end
+
     def to_s
       formatted = "<#Category: " +
       self.instance_variables.map do |var|

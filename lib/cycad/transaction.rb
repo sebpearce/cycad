@@ -17,6 +17,10 @@ module Cycad
       to_s
     end
 
+    def hash
+      [@id, @amount, @date, @note, @category_id, @tags].hash
+    end
+
     def to_s
       formatted = "<#Transaction: " +
       self.instance_variables.map do |var|

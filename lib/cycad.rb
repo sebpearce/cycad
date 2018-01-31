@@ -25,16 +25,13 @@ require 'cycad/transaction/use_cases/create'
 
 # Homework 2018-01-21
 
-# * Use a non-in-memory database so that records actually live longer than the console session
-#     --> http://rom-rb.org/4.0/learn/getting-started/setup-dsl/
-# * Abstract relations out of database configuration into their own classes
-# * Add migrations to the application and make it so that you can run them
 # * Use `ROM::Struct` in models to enforce types on attributes and to clean up the `initializer` code.
 
-# Homework 2018-01-24
+# Homework 2018-01-31
 
-# * Create a hash method in your category and transaction classes
-# * Add migrations to the application and make it so that you can run them on both a development and test database
+# Investigate if guard is using the dev / test database, perhaps by creating stuff in dev database and seeing if it sticks around after a guard run
+# Submit a pull request to remove register_at
+# Use Cycad "in anger" and fix bugs / add features as neccessary
 # * Submit a pull request to remove register_at
 
 Cycad::Repository.register(:category, Database::CategoryRepo.new(Database::Config::Rom))
