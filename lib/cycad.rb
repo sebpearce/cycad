@@ -44,6 +44,8 @@ module Cycad
     end
 
     def create_transaction(attrs = {})
+      # TODO extract this to a type checker module
+      raise "Please give me a hash." unless attrs.is_a? Hash
       Cycad::Transaction::UseCases::Create.new.call(attrs)
     end
 

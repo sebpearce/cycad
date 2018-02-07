@@ -10,6 +10,10 @@ namespace :db do
 
     ROM::SQL::RakeSupport.env = Database::Config::Rom
   end
+
+  task :seed do
+    require_relative "db/seed"
+  end
 end
 
 task :spec do
