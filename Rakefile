@@ -13,7 +13,8 @@ namespace :db do
 end
 
 task :spec do
-  ENV['DATABASE_URL'] = "sqlite://./spec/test.db"
+  require 'dotenv'
+  Dotenv.load!(".env.test")
   Rake::Task["db:setup"].invoke
   Rake::Task["db:migrate"].invoke
   system("rspec")

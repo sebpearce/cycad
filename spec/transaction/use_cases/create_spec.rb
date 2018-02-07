@@ -3,6 +3,7 @@ require 'spec_helper'
 RSpec.describe Cycad::Transaction::UseCases::Create do
   context 'validate' do
     it 'is valid when date, amount and category_id are specified' do
+      p Database::Config::Rom
       result = subject.validate({
         date: Date.parse('2017-12-20'),
         amount: 20,

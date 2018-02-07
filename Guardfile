@@ -14,7 +14,7 @@ directories %w[lib spec] \
 #
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
-guard :rspec, cmd: 'bundle exec rspec' do
+guard :rspec, cmd: 'dotenv -f ".env.test" bundle exec rspec' do
   require 'guard/rspec/dsl'
   dsl = Guard::RSpec::Dsl.new(self)
 
