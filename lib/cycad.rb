@@ -29,8 +29,6 @@ require 'cycad/transaction/use_cases/create'
 
 # Homework 2018-01-31
 
-# Investigate if guard is using the dev / test database, perhaps by creating stuff in dev database and seeing if it sticks around after a guard run
-# Submit a pull request to remove register_at
 # Use Cycad "in anger" and fix bugs / add features as neccessary
 # * Submit a pull request to remove register_at
 

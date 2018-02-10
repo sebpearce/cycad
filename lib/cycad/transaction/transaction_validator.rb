@@ -9,7 +9,7 @@ module Cycad
           required(:amount).filled(:int?, excluded_from?: [0])
           required(:category_id).filled(:int?)
           optional(:note).maybe(:str?, max_size?: 255)
-          optional(:tags).maybe(:array?)
+          optional(:tags).maybe(:str?)
         end
 
         schema.call(input)
@@ -21,7 +21,7 @@ module Cycad
           optional(:amount).filled(:int?, excluded_from?: [0])
           optional(:category_id).filled(:int?)
           optional(:note).maybe(:str?, max_size?: 255)
-          optional(:tags).maybe(:array?)
+          optional(:tags).maybe(:str?)
         end
 
         schema.call(input)

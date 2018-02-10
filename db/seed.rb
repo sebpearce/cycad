@@ -1,4 +1,5 @@
 require 'Date'
+require 'cycad'
 
 transaction_category_names = %w[
   Salary

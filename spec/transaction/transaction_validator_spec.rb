@@ -104,28 +104,28 @@ RSpec.describe Cycad::Transaction::Validator do
       end
     end
 
-    context 'when the tags are not an array' do
+    context 'when the tags are not a string' do
       let(:input) do
         {
           date: Date.new(2017, 5, 4),
           amount: 5,
           category_id: 13,
-          tags: 'lalala'
+          tags: ['asdf', 'asdf']
         }
       end
 
       it 'returns an error' do
-        expect(subject.errors).to eq({tags: ['must be an array']})
+        expect(subject.errors).to eq({tags: ['must be a string']})
       end
     end
 
-    context 'when the tags are []' do
+    context 'when the tags are an empty string' do
       let(:input) do
         {
           date: Date.new(2017, 5, 4),
           amount: 5,
           category_id: 6,
-          tags: []
+          tags: ''
         }
       end
 
