@@ -20,7 +20,7 @@ transaction_category_names = %w[
 end
 
 @random_transactions = (1..10).map do |x|
-  rand_amount = rand(50) + 1
+  rand_amount = rand(1000) - 500
   rand_date = Date.new(rand(2) + 2016, rand(12) + 1, rand(27) + 1)
   Cycad.create_transaction(amount: rand_amount, date: rand_date, category_id: @categories.sample.id)
 end
