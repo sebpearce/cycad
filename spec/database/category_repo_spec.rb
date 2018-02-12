@@ -44,5 +44,21 @@ RSpec.describe Database::CategoryRepo, db: true do
       expect(result.name).to eq('test2')
     end
   end
+
+  context '.unique?' do
+    context 'when category is not unique' do
+      it 'returns false' do
+        result = subject.unique?('test')
+        expect(result).to eq(false)
+      end
+    end
+
+    context 'when category is unique' do
+      it 'returns true' do
+        result = subject.unique?('testxyz')
+        expect(result).to eq(true)
+      end
+    end
+  end
 end
 

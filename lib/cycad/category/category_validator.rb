@@ -11,7 +11,7 @@ module Cycad
             config.messages_file = 'lib/cycad/category/category_validator_errors.yml'
 
             def unique_name?(name)
-               repo.by_name(name).nil?
+               repo.unique?(name)
             end
           end
 

@@ -7,7 +7,7 @@ RSpec.describe Cycad::Category::Validator do
 
     context 'when the name is unique' do
       before do
-        allow(repo).to receive(:by_name) { nil }
+        allow(repo).to receive(:unique?) { true }
       end
 
       context 'when the name is valid' do
@@ -37,7 +37,7 @@ RSpec.describe Cycad::Category::Validator do
 
     context 'when the name is not unique' do
       before do
-        allow(repo).to receive(:by_name) { 'previous record' }
+        allow(repo).to receive(:unique?) { false }
       end
 
       let(:input) { {name: 'parsley'} }

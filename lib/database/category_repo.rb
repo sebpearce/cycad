@@ -16,6 +16,10 @@ module Database
       categories.where(name: name).one
     end
 
+    def unique?(name)
+      categories.unique?(name: name)
+    end
+
     def all
       categories.to_a
     end
