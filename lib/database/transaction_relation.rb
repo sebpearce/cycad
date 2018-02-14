@@ -1,6 +1,7 @@
 module Database
   module Relations
     class Transactions < ROM::Relation[:sql]
+      struct_namespace Cycad
       schema(:transactions) do
         attribute :id, ROM::Types::Int
         attribute :category_id, ROM::SQL::Types::ForeignKey(:categories, ROM::Types::String)
