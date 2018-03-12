@@ -32,6 +32,12 @@ require 'cycad/transaction/use_cases/create'
 # Use Cycad "in anger" and fix bugs / add features as neccessary
 # * Submit a pull request to remove register_at
 
+# Notes from 2018-02-22
+# controller will:
+# - provide the route
+# - pass off the work to a use case class
+# - handle success and failure (404 etc)
+
 Cycad::Repository.register(:category, Database::CategoryRepo.new(Database::Config::Rom))
 Cycad::Repository.register(:transaction, Database::TransactionRepo.new(Database::Config::Rom))
 

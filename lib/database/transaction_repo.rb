@@ -1,5 +1,4 @@
 require 'rom-repository'
-require 'pry'
 
 module Database
   class TransactionRepo < ROM::Repository[:transactions]
@@ -10,11 +9,11 @@ module Database
       transactions.where(conditions, &block).to_a
     end
 
-    def filter(amount: nil, date: nil, category_id: nil, tags: nil)
+    def filter(amount: nil, date: nil, category_ids: nil, tags: nil)
       filtered = transactions
       filtered = amount_filter(filtered, **amount) if amount
       filtered = date_filter(filtered, **date) if date
-      filtered = category_filter(filtered, category_id) if category_id
+      filtered = category_filter(filtered, category_ids) if category_ids
       filtered.to_a
     end
 
@@ -30,8 +29,8 @@ module Database
       filtered
     end
 
-    def category_filter(filtered = transactions, category_id)
-      filtered = filtered.where(category_id: category_id)
+    def category_filter(filtered = transactions, category_ids = [])
+      filtered = filtered.where(category_id: category_ids)
       filtered
     end
 
