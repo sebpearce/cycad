@@ -1,4 +1,4 @@
-CRUD
+// CRUD
 
 
 // create transaction route
@@ -19,7 +19,6 @@ CRUD
   amount: {
     lt: 50,
     gt: 30
-    // eq: 10
   }
 }
 
@@ -34,6 +33,14 @@ CRUD
   category_id: [
     12, 94
   ]
+}
+
+// read categories route
+GET
+
+// read category route
+{
+  category_id: 5
 }
 
 // update (different endpoint for categories and transactions)
