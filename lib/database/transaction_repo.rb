@@ -2,7 +2,6 @@ require 'rom-repository'
 
 module Database
   class TransactionRepo < ROM::Repository[:transactions]
-    struct_namespace Cycad
     commands :create, update: :by_pk, delete: :by_pk, mapper: :transaction
 
     def query(conditions = true, &block)

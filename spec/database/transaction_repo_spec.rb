@@ -140,10 +140,10 @@ RSpec.describe Database::TransactionRepo, db: true do
 
     it 'filters records by category' do
       result = subject.filter(
-        category_id: @bills.id
+        category_ids: [@bills.id]
       )
       wrong_result = subject.filter(
-        category_id: @bills.id + 1
+        category_ids: [@bills.id + 1]
       )
       expect(result.first.amount).to eq(500)
       expect(wrong_result).to be_empty
