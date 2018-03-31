@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec'
-  spec.add_development_dependency 'dotenv'
+  spec.add_dependency 'dotenv'
   spec.add_dependency 'dry-validation'
   spec.add_dependency 'dry-transaction'
   spec.add_dependency 'sqlite3'
